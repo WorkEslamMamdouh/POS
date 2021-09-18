@@ -328,24 +328,21 @@ var LoginPage = (function (_super) {
     }
     return LoginPage;
 }(SecurityClass));
-var PRODUCT = (function (_super) {
-    __extends(PRODUCT, _super);
+var PRODUCT = (function () {
     function PRODUCT() {
-        var _this = _super.call(this) || this;
-        _this.PRODUCT_ID = 0;
-        _this.PRODUCT_NAME = "";
-        _this.PRODUCT_QET = 0;
-        _this.PRODUCT_Purchasing_price = 0;
-        _this.PRODUCT_PRICE = 0;
-        _this.MinUnitPrice = 0;
-        _this.ID_CAT = 0;
-        _this.TrType = 0;
-        _this.serial = "";
-        _this.StatusFlag = "";
-        return _this;
+        this.PRODUCT_ID = 0;
+        this.PRODUCT_NAME = "";
+        this.PRODUCT_QET = 0;
+        this.PRODUCT_Purchasing_price = 0;
+        this.PRODUCT_PRICE = 0;
+        this.MinUnitPrice = 0;
+        this.ID_CAT = 0;
+        this.serial = "";
+        this.TrType = 0;
+        this.StatusFlag = "";
     }
     return PRODUCT;
-}(SecurityClass));
+}());
 var ReviewSalesItemInfo = (function (_super) {
     __extends(ReviewSalesItemInfo, _super);
     function ReviewSalesItemInfo() {

@@ -283,7 +283,7 @@ namespace API.Controllers
         }
 
 
-        [HttpGet, AllowAnonymous]
+        [HttpPost, AllowAnonymous]
         public IHttpActionResult Updat(List<PRODUCT> PRODUCTAll)
         {
 

@@ -858,6 +858,7 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
           <Parameter Name="UserName_EMPLOYEE_ID" Type="nvarchar" Mode="In" />
           <Parameter Name="Namber_Order_Tecaye" Type="int" Mode="In" />
         </Function>
+        <Function Name="New_Data_Bes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="Notifications_confirmation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="Notifications_insert_Name_Pilot" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID_ORDER_Delivery" Type="int" Mode="In" />
@@ -1149,19 +1150,19 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
             <Parameter Name="cheak" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="Add_Emp">
-          <Parameter Name="user_name" Mode="In" Type="String" />
+            <Parameter Name="user_name" Mode="In" Type="String" />
             <Parameter Name="passwrd" Mode="In" Type="String" />
             <Parameter Name="emp_nam" Mode="In" Type="String" />
             <Parameter Name="emp_phone" Mode="In" Type="String" />
             <Parameter Name="type_emp" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Add_Message_Chat">
-          <Parameter Name="Name_Send_Message" Mode="In" Type="String" />
+            <Parameter Name="Name_Send_Message" Mode="In" Type="String" />
             <Parameter Name="Date_Send" Mode="In" Type="String" />
             <Parameter Name="Text_Send" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Add_Message_open_Uesr">
-          <Parameter Name="Name_Send_Message" Mode="In" Type="String" />
+            <Parameter Name="Name_Send_Message" Mode="In" Type="String" />
             <Parameter Name="Date_Send" Mode="In" Type="String" />
             <Parameter Name="Text_Send" Mode="In" Type="String" />
             <Parameter Name="open_user" Mode="In" Type="String" />
@@ -1170,13 +1171,13 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
           <Parameter Name="UserName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="addemp">
-          <Parameter Name="emp_nam" Mode="In" Type="String" />
+            <Parameter Name="emp_nam" Mode="In" Type="String" />
             <Parameter Name="emp_phone" Mode="In" Type="String" />
             <Parameter Name="usar_name_emp" Mode="In" Type="String" />
             <Parameter Name="passwrd_emp" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="all_The_Gard" ReturnType="Collection(SamahModel.all_The_Gard_Result)">
-          <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="UserName" Mode="In" Type="String" />
             <Parameter Name="FromDate" Mode="In" Type="DateTime" />
             <Parameter Name="ToDate" Mode="In" Type="DateTime" />
           </FunctionImport>
@@ -1215,7 +1216,7 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
           <Parameter Name="Name_CAT" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="insert_castomer">
-          <Parameter Name="cast_name" Mode="In" Type="String" />
+            <Parameter Name="cast_name" Mode="In" Type="String" />
             <Parameter Name="cast_addres1" Mode="In" Type="String" />
             <Parameter Name="cast_addres2" Mode="In" Type="String" />
             <Parameter Name="cast_phone" Mode="In" Type="String" />
@@ -1224,7 +1225,7 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
           <Parameter Name="Name_CAT" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="insert_ORDER_DELIVERY">
-          <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="UserName" Mode="In" Type="String" />
             <Parameter Name="Namber_Order_Delivery" Mode="In" Type="Int32" />
             <Parameter Name="Total_All" Mode="In" Type="Decimal" />
             <Parameter Name="Date_Order_Delivery" Mode="In" Type="String" />
@@ -1234,27 +1235,27 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
             <Parameter Name="Confirmation" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="insert_ORDER_TECAYE">
-          <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="UserName" Mode="In" Type="String" />
             <Parameter Name="Namber_Order_Tecaye" Mode="In" Type="Int32" />
             <Parameter Name="Total_All" Mode="In" Type="Decimal" />
             <Parameter Name="Date_Order_Tecaye" Mode="In" Type="String" />
             <Parameter Name="type_order" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="insert_Outlet">
-          <Parameter Name="Dasc_Name" Mode="In" Type="String" />
+            <Parameter Name="Dasc_Name" Mode="In" Type="String" />
             <Parameter Name="pirce" Mode="In" Type="Decimal" />
             <Parameter Name="UserName" Mode="In" Type="String" />
             <Parameter Name="Tr_Type" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="insert_Stock_ORDER_TECAYE">
-          <Parameter Name="Name_Product_sell" Mode="In" Type="String" />
+            <Parameter Name="Name_Product_sell" Mode="In" Type="String" />
             <Parameter Name="Quantity_sell" Mode="In" Type="Double" />
             <Parameter Name="price_One_part" Mode="In" Type="Decimal" />
             <Parameter Name="Total_Price_One_Part" Mode="In" Type="Decimal" />
             <Parameter Name="Notes_Order" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="insert_Stok_ORDER_DELIVERY">
-          <Parameter Name="Name_Product_sell" Mode="In" Type="String" />
+            <Parameter Name="Name_Product_sell" Mode="In" Type="String" />
             <Parameter Name="Quantity_sell" Mode="In" Type="Double" />
             <Parameter Name="price_One_part" Mode="In" Type="Decimal" />
             <Parameter Name="Total_Price_One_Part" Mode="In" Type="Decimal" />
@@ -1263,7 +1264,7 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
           </FunctionImport>
           <FunctionImport Name="insert_Table_two_days" />
           <FunctionImport Name="insrte_ORDER_TECAYE_All">
-          <Parameter Name="Name_Product_sell" Mode="In" Type="String" />
+            <Parameter Name="Name_Product_sell" Mode="In" Type="String" />
             <Parameter Name="Quantity_sell" Mode="In" Type="Double" />
             <Parameter Name="price_One_part" Mode="In" Type="Decimal" />
             <Parameter Name="Total_Price_One_Part" Mode="In" Type="Decimal" />
@@ -1273,14 +1274,14 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
           </FunctionImport>
           <FunctionImport Name="Notifications_confirmation" ReturnType="Collection(SamahModel.Notifications_confirmation_Result)" />
           <FunctionImport Name="Notifications_insert_Name_Pilot">
-          <Parameter Name="ID_ORDER_Delivery" Mode="In" Type="Int32" />
+            <Parameter Name="ID_ORDER_Delivery" Mode="In" Type="Int32" />
             <Parameter Name="Name_Pilot" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Notifications_successful">
           <Parameter Name="ID_ORDER_Delivery" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="open_and_close_Login">
-          <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="UserName" Mode="In" Type="String" />
             <Parameter Name="password" Mode="In" Type="String" />
             <Parameter Name="Open_Login" Mode="In" Type="Boolean" />
           </FunctionImport>
@@ -1296,7 +1297,7 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
           <Parameter Name="newphone" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="search_PRODUCT_NAME" ReturnType="Collection(SamahModel.search_PRODUCT_NAME_Result)">
-          <Parameter Name="Name_CAT" Mode="In" Type="String" />
+            <Parameter Name="Name_CAT" Mode="In" Type="String" />
             <Parameter Name="PRODUCT_NAME" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="select_All_Message" ReturnType="Collection(SamahModel.select_All_Message_Result)" />
@@ -1308,47 +1309,47 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
           <FunctionImport Name="Select_List_Num_Order" ReturnType="Collection(Int32)" />
           <FunctionImport Name="select_Pilot" ReturnType="Collection(String)" />
           <FunctionImport Name="sp_alterdiagram">
-          <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
             <Parameter Name="version" Mode="In" Type="Int32" />
             <Parameter Name="definition" Mode="In" Type="Binary" />
           </FunctionImport>
           <FunctionImport Name="sp_creatediagram">
-          <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
             <Parameter Name="version" Mode="In" Type="Int32" />
             <Parameter Name="definition" Mode="In" Type="Binary" />
           </FunctionImport>
           <FunctionImport Name="sp_dropdiagram">
-          <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(SamahModel.sp_helpdiagramdefinition_Result)">
-          <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(SamahModel.sp_helpdiagrams_Result)">
-          <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_renamediagram">
-          <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
           <FunctionImport Name="spGetNameByUser" ReturnType="Collection(SamahModel.spGetNameByUser_Result)">
-          <Parameter Name="NameUser" Mode="In" Type="String" />
+            <Parameter Name="NameUser" Mode="In" Type="String" />
             <Parameter Name="password" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="spInsertPRODUCT">
-          <Parameter Name="PRODUCT_NAME" Mode="In" Type="String" />
+            <Parameter Name="PRODUCT_NAME" Mode="In" Type="String" />
             <Parameter Name="PRODUCT_PRICE" Mode="In" Type="Decimal" />
             <Parameter Name="PRODUCT_QET" Mode="In" Type="Decimal" />
             <Parameter Name="Name_CAT" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="update_customer">
-          <Parameter Name="CUSTOMER_NAME" Mode="In" Type="String" />
+            <Parameter Name="CUSTOMER_NAME" Mode="In" Type="String" />
             <Parameter Name="CUSTOMER_ADDRES" Mode="In" Type="String" />
             <Parameter Name="CUSTOMER_ADDRES_2" Mode="In" Type="String" />
             <Parameter Name="PHONE" Mode="In" Type="String" />
@@ -1358,7 +1359,7 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
           <Parameter Name="phone" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="update_Emp_New">
-          <Parameter Name="user_name" Mode="In" Type="String" />
+            <Parameter Name="user_name" Mode="In" Type="String" />
             <Parameter Name="passwrd" Mode="In" Type="String" />
             <Parameter Name="emp_nam" Mode="In" Type="String" />
             <Parameter Name="emp_phone" Mode="In" Type="String" />
@@ -1366,29 +1367,29 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
             <Parameter Name="type_emp" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Update_Settings">
-          <Parameter Name="Nots" Mode="In" Type="String" />
+            <Parameter Name="Nots" Mode="In" Type="String" />
             <Parameter Name="UserName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetUser_Login" ReturnType="Collection(SamahModel.GetUser_Login_Result)">
-          <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="UserName" Mode="In" Type="String" />
             <Parameter Name="password" Mode="In" Type="String" />
             <Parameter Name="Open_Login" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="update_SalesReturn">
-          <Parameter Name="PRODUCT_ID" Mode="In" Type="Int32" />
+            <Parameter Name="PRODUCT_ID" Mode="In" Type="Int32" />
             <Parameter Name="Quantity_sell" Mode="In" Type="Int32" />
             <Parameter Name="Total_Price_One_Part" Mode="In" Type="Decimal" />
             <Parameter Name="ID_ORDER" Mode="In" Type="Int32" />
             <Parameter Name="StatusFlag" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="update_Sales_Master" ReturnType="Collection(Decimal)">
-          <Parameter Name="Total_All" Mode="In" Type="Decimal" />
+            <Parameter Name="Total_All" Mode="In" Type="Decimal" />
             <Parameter Name="UserName" Mode="In" Type="String" />
             <Parameter Name="ID_ORDER" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="Close_days" />
           <FunctionImport Name="insert_Purchases_Master">
-          <Parameter Name="Tr_Date" Mode="In" Type="String" />
+            <Parameter Name="Tr_Date" Mode="In" Type="String" />
             <Parameter Name="ID_Supplier" Mode="In" Type="Int32" />
             <Parameter Name="Type_Debit" Mode="In" Type="Boolean" />
             <Parameter Name="Total_Amount" Mode="In" Type="Decimal" />
@@ -1397,7 +1398,7 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
             <Parameter Name="REMARKS" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Processes_Purchases" ReturnType="Collection(String)">
-          <Parameter Name="PRODUCT_NAME" Mode="In" Type="String" />
+            <Parameter Name="PRODUCT_NAME" Mode="In" Type="String" />
             <Parameter Name="PRODUCT_QET" Mode="In" Type="Int32" />
             <Parameter Name="PRODUCT_Purchasing_price" Mode="In" Type="Decimal" />
             <Parameter Name="PRODUCT_PRICE" Mode="In" Type="Decimal" />
@@ -1409,7 +1410,7 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
             <Parameter Name="StatusFlag" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="update_Purchases_Master">
-          <Parameter Name="TrNo" Mode="In" Type="Int32" />
+            <Parameter Name="TrNo" Mode="In" Type="Int32" />
             <Parameter Name="Tr_Date" Mode="In" Type="String" />
             <Parameter Name="ID_Supplier" Mode="In" Type="Int32" />
             <Parameter Name="Type_Debit" Mode="In" Type="Boolean" />
@@ -1419,7 +1420,7 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
             <Parameter Name="REMARKS" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GFunc_GetPrivilage" IsComposable="true" ReturnType="Collection(SamahModel.GFunc_GetPrivilage_Result)">
-          <Parameter Name="Comp" Mode="In" Type="Int32" />
+            <Parameter Name="Comp" Mode="In" Type="Int32" />
             <Parameter Name="bra" Mode="In" Type="Int32" />
             <Parameter Name="user" Mode="In" Type="String" />
             <Parameter Name="Sys" Mode="In" Type="String" />
@@ -1427,7 +1428,7 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
             <Parameter Name="Mod" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GFunc_GetPrivilageRole" IsComposable="true" ReturnType="Collection(SamahModel.GFunc_GetPrivilageRole_Result)">
-          <Parameter Name="Comp" Mode="In" Type="Int32" />
+            <Parameter Name="Comp" Mode="In" Type="Int32" />
             <Parameter Name="bra" Mode="In" Type="Int32" />
             <Parameter Name="user" Mode="In" Type="String" />
             <Parameter Name="Sys" Mode="In" Type="String" />
@@ -1436,24 +1437,24 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
           </FunctionImport>
           <FunctionImport Name="Get_Balance" ReturnType="Collection(Decimal)" />
           <FunctionImport Name="Insert_Enter_Money" ReturnType="Collection(Decimal)">
-          <Parameter Name="Dasc_Name" Mode="In" Type="String" />
+            <Parameter Name="Dasc_Name" Mode="In" Type="String" />
             <Parameter Name="pirce" Mode="In" Type="Decimal" />
             <Parameter Name="UserName" Mode="In" Type="String" />
             <Parameter Name="Tr_Type" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Stord_Get_Outlet" ReturnType="Collection(SamahModel.Stord_Get_Outlet_Result)">
-          <Parameter Name="FromDate" Mode="In" Type="String" />
+            <Parameter Name="FromDate" Mode="In" Type="String" />
             <Parameter Name="ToDate" Mode="In" Type="String" />
             <Parameter Name="USER_CODE" Mode="In" Type="String" />
             <Parameter Name="Type" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="all_The_Gard_Details" ReturnType="Collection(SamahModel.all_The_Gard_Details_Result)">
-          <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="UserName" Mode="In" Type="String" />
             <Parameter Name="FromDate" Mode="In" Type="DateTime" />
             <Parameter Name="ToDate" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="insert_EMPLOYEE">
-          <Parameter Name="EMPLOYEE_NAME" Mode="In" Type="String" />
+            <Parameter Name="EMPLOYEE_NAME" Mode="In" Type="String" />
             <Parameter Name="USER_CODE" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="CATEGRES" EntityType="SamahModel.CATEGRE" />
@@ -1507,6 +1508,7 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
           <Parameter Name="TrNo" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="PRODUCTs" EntityType="SamahModel.PRODUCT" />
+          <FunctionImport Name="New_Data_Bes" />
           </EntityContainer>
         <ComplexType Name="insert_Table_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
@@ -3533,6 +3535,7 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="New_Data_Bes" FunctionName="SamahModel.Store.New_Data_Bes" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

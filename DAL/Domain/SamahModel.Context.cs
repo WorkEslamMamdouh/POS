@@ -71,7 +71,7 @@ namespace DAL.Domain
         public virtual DbSet<IQ_Purchases_Master> IQ_Purchases_Master { get; set; }
         public virtual DbSet<ReviewSalesItemInfo> ReviewSalesItemInfoes { get; set; }
         public virtual DbSet<ReviewSalesMaster> ReviewSalesMasters { get; set; }
-        public virtual DbSet<PRODUCT> PRODUCT { get; set; }
+        public virtual DbSet<PRODUCT> PRODUCTs { get; set; }
     
         public virtual ObjectResult<insert_Table_Result> insert_Table(string name, string phone, string type, string message, string tR_Type)
         {
@@ -1225,6 +1225,11 @@ namespace DAL.Domain
                 new ObjectParameter("TrNo", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Original_sales_receipt_Result>("Original_sales_receipt", trNoParameter);
+        }
+    
+        public virtual int New_Data_Bes()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("New_Data_Bes");
         }
     }
 }

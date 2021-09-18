@@ -473,9 +473,9 @@ class LoginPage extends SecurityClass {
     public Open_Login: boolean;
 }
 
-class PRODUCT extends SecurityClass {
-    constructor() {
-        super();
+  
+class PRODUCT   {
+    constructor() { 
         this.PRODUCT_ID = 0;
         this.PRODUCT_NAME = "";
         this.PRODUCT_QET = 0;
@@ -483,8 +483,8 @@ class PRODUCT extends SecurityClass {
         this.PRODUCT_PRICE = 0;
         this.MinUnitPrice = 0;
         this.ID_CAT = 0;
-        this.TrType = 0;
         this.serial = "";
+        this.TrType = 0;
         this.StatusFlag = "";
     }
     public PRODUCT_ID: number;
@@ -494,8 +494,8 @@ class PRODUCT extends SecurityClass {
     public PRODUCT_PRICE: number;
     public MinUnitPrice: number;
     public ID_CAT: number;
-    public TrType: number;
     public serial: string;
+    public TrType: number;
     public StatusFlag: string;
 }
 

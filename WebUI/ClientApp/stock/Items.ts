@@ -152,7 +152,7 @@ namespace Items {
 
 
             $("#txtDescA" + CountGrid).removeAttr("disabled");
-            $("#ddlType" + CountGrid).removeAttr("disabled");
+            $("#dllType" + CountGrid).removeAttr("disabled");
             $("#txtOnhandQty" + CountGrid).removeAttr("disabled");
             $("#select_Type_Item" + CountGrid).removeAttr("disabled");
             $("#txtPurchasing_price" + CountGrid).removeAttr("disabled");
@@ -232,10 +232,9 @@ namespace Items {
                 $("#txt_StatusFlag" + cnt).val("u");
             Validate_code(cnt);
         });
-        $("#ddlType" + cnt).on('change', function () {
+        $("#dllType" + cnt).on('change', function () {
             if ($("#txt_StatusFlag" + cnt).val() != "i")
-                $("#txt_StatusFlag" + cnt).val("u");
-           
+                $("#txt_StatusFlag" + cnt).val("u"); 
         });
         $("#select_Type_Item" + cnt).on('change', function () {
 
@@ -425,7 +424,7 @@ namespace Items {
 
 
         Ajax.Callsync({
-            type: "Get",
+            type: "Post",
             url: sys.apiUrl("Items", "Updat"),
             data: JSON.stringify(BilldDetail),
             success: (d) => {
@@ -463,9 +462,9 @@ namespace Items {
                 //debugger
                 Model.StatusFlag = StatusFlag.toString();
                 Model.PRODUCT_ID = 0;
-                Model.ID_CAT = $('#select_Type_Item' + i).val();
+                Model.ID_CAT = Number($('#select_Type_Item' + i).val());
                 Model.PRODUCT_NAME = $("#txtDescA" + i).val();
-                Model.TrType = $("#dllType" + i).val();
+                Model.TrType = Number($("#dllType" + i).val());
                 Model.PRODUCT_QET = Number($("#txtOnhandQty" + i).val());
                 Model.PRODUCT_PRICE = Number($('#txtUnitPrice' + i).val());
                 Model.MinUnitPrice = Number($('#txtMinUnitPrice' + i).val());
@@ -480,10 +479,10 @@ namespace Items {
             if (StatusFlag == "u") {
                 debugger
                 Model.StatusFlag = StatusFlag.toString();
-                Model.PRODUCT_ID = $("#txtID" + i).val();
-                Model.ID_CAT = $('#select_Type_Item' + i).val();
+                Model.PRODUCT_ID = Number($("#txtID" + i).val());
+                Model.ID_CAT = Number( $('#select_Type_Item' + i).val());
                 Model.PRODUCT_NAME = $("#txtDescA" + i).val();
-                Model.TrType = $("#dllType" + i).val();
+                Model.TrType = Number($("#dllType" + i).val());
                 Model.PRODUCT_QET = Number($("#txtOnhandQty" + i).val());
                 Model.PRODUCT_PRICE = Number($('#txtUnitPrice' + i).val());
                 Model.MinUnitPrice = Number($('#txtMinUnitPrice' + i).val());
@@ -501,7 +500,7 @@ namespace Items {
                 if ($("#txtID" + i).val() != "") {
 
                     Model.StatusFlag = StatusFlag.toString();
-                    Model.PRODUCT_ID = $("#txtID" + i).val();
+                    Model.PRODUCT_ID = Number($("#txtID" + i).val());
                     BilldDetail.push(Model);
                     flag_Assign = 1;
                 }
@@ -600,7 +599,7 @@ namespace Items {
             $("#txtID" + i).val(Details[i].PRODUCT_ID);
             $("#txtCode" + i).val(i + 1);
             $("#txtDescA" + i).val(Details[i].PRODUCT_NAME);
-            $("#ddlType" + i).val(Details[i].TrType);
+            $("#dllType" + i).val(Details[i].TrType);
             $("#txtOnhandQty" + i).val(Details[i].PRODUCT_QET);
             $("#txtPurchasing_price" + i).val(Details[i].PRODUCT_Purchasing_price);
             $("#txtUnitPrice" + i).val(Details[i].PRODUCT_PRICE);
@@ -666,7 +665,7 @@ namespace Items {
             $("#txtID" + i).val(Details[i].PRODUCT_ID);
             $("#txtCode" + i).val(i + 1);
             $("#txtDescA" + i).val(Details[i].PRODUCT_NAME);
-            $("#ddlType" + i).val(Details[i].TrType);
+            $("#dllType" + i).val(Details[i].TrType);
             $("#txtOnhandQty" + i).val(Details[i].PRODUCT_QET);
             $("#txtPurchasing_price" + i).val(Details[i].PRODUCT_Purchasing_price);
             $("#txtUnitPrice" + i).val(Details[i].PRODUCT_PRICE);
@@ -716,7 +715,7 @@ namespace Items {
             //$("#txtCode" + RecNo).val("");
             $("#txtCode" + RecNo).val("000");
             $("#txtDescA" + RecNo).val("000");
-            $("#ddlType" + RecNo).val("000");
+            $("#dllType" + RecNo).val("000");
             $("#txtOnhandQty" + RecNo).val("000");
             $("#txtPurchasing_price" + RecNo).val("000");
             $("#txtUnitPrice" + RecNo).val("000");
@@ -730,7 +729,7 @@ namespace Items {
         $("#txtID" + RecNo).val("");
         $("#txtCode" + RecNo).val("0");
         $("#txtDescA" + RecNo).val(0);
-        $("#ddlType" + RecNo).val(0);
+        $("#dllType" + RecNo).val(0);
         $("#txtRefItemCode" + RecNo).val(0);
         $("#txtOnhandQty" + RecNo).val(0);
         $("#txtLastBarCodeSeq" + RecNo).val(0);
