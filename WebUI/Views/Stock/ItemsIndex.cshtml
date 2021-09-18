@@ -1,0 +1,333 @@
+﻿@{
+    ViewBag.Title = "الاصناف";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<style>
+    .posation_overflow {
+        position: absolute;
+        left: -79px;
+    }
+
+    .style_pading_lepel {
+        padding-top: 10px;
+        /*padding: 10px 12px 0 0;*/
+    }
+
+    .style_pading_lepel2 {
+        /*padding-top: 10px;*/
+        padding: 10px 30px 0 0;
+    }
+
+    .pading_ {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .pad_ {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+
+    .inner tr td {
+        border-top: none !important;
+    }
+
+    .btn-info {
+        color: #fff;
+        background-color: #5bc0de;
+        border-color: #46b8da;
+        padding: 10px 16px;
+        font-size: 18px;
+        line-height: 1.3333333;
+        border-radius: 6px;
+    }
+
+    .fontitm3 {
+        float: right;
+        margin: 5px -2% 0px 0px !important;
+        font-size: 25px !important;
+        position: absolute;
+    }
+
+    .style_pading {
+        padding-left: 1px;
+        padding-right: 1px;
+    }
+
+    .table_11 tr td:nth-child(3) {
+        width: 200px;
+    }
+
+    .table_11 tr th:nth-child(12), .table_11 tr td:nth-child(12) {
+        width: 120px;
+    }
+
+    .table_11 {
+        margin-bottom: 0px;
+    }
+
+    .auto-style1 {
+        background-color: #F5F5F5;
+    }
+
+    .display_none {
+        display: none !important;
+    }
+
+    #btnAddDetails {
+        font-size: 40px;
+    }
+
+        #btnAddDetails:hover {
+            color: #24b414;
+        }
+
+    .glyphicon-remove-sign:hover {
+        color: red
+    }
+
+    .minus_btn {
+    }
+
+    .font_codenumber {
+        font-size: 19px;
+        font-weight: bold;
+    }
+
+    .style_border {
+        border-top: solid 1px;
+        padding: 10px 0px 4px 0px;
+    }
+
+    .panel-body {
+        background-color: aliceblue;
+    }
+</style>
+
+<div class="panel panel-default">
+    <div class="panel-heading panel_me">
+        <i class="glyphicon glyphicon-pencil icon_panel"></i><label class="span_item">الفئات</label><label class="span_item"></label>
+    </div>
+    <div class="panel-body" id="div_ContentData">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="col-lg-1 pad_">
+                    <label class=" style_pading_lepel2 ">نوع الفئة</label>
+                </div>
+                <div class="col-lg-3">
+                    <select id="drbfamilly_cat" class="form-control">
+                        <option value="Null">اختر نوع الفئة</option>
+                    </select>
+                </div>
+
+
+                <div class="col-lg-1 pad_">
+                    <label class=" style_pading_lepel2  ">الفئة</label>
+                </div>
+                <div class="col-lg-3">
+                    <select id="drpPaymentType" disabled class="form-control">
+                        <option value="Null">اختر الفئة</option>
+                    </select>
+                </div>
+                <div class="col-lg-1">
+
+                </div>
+
+                <div class="col-lg-2">
+                    <button type="button" class="btn btn-warning display_none" id="btnback">
+                        <span class="glyphicon glyphicon-backward">رجوع</span>
+                    </button>
+
+                    <button id="btnsave" type="button" class="btn btn-success display_none">
+                        <span class="glyphicon glyphicon-save">حفظ</span>
+                    </button>
+
+                    <button type="button" class="btn btn-primary" id="btnedite">
+                        <span class="glyphicon glyphicon-edit">تعديل</span>
+                    </button>
+                </div>
+
+
+
+
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+
+                <div class="col-lg-1 col-md-1 col-sm-1">
+                    <label class="style_pading_lepel">الباركود</label>
+                </div>
+
+                <div class="col-lg-2 col-md-3 col-sm-3">
+                    <input id="txt_Barcode" type="text" class="form-control right2" />
+                </div>
+                <div class="col-lg-1 col-md-1 col-sm-1">
+                    <label class="style_pading_lepel">الاسم</label>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                    <input id="txt_ItemName" type="text" class="form-control right2" />
+                </div>
+                    
+
+                <div class="col-lg-1 col-md-1 col-sm-1">
+
+                    <label class="style_pading_lepel">الكمية</label>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2">
+                    <input id="txt_Quantity" type="number" class="form-control right2" />
+                </div>
+
+                <div class="col-lg-2">
+                    <button type="button" class="btn btn-warning " id="btnAddQty">
+                        <span class="glyphicon glyphicon-arrow-down">إضافة</span>
+                    </button>
+                </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+
+
+
+                <div class="col-lg-12">
+                    <div class="col-lg-12" id="div_Data_devolte" style=" ">
+                        <div class="col-lg-2" style="margin-right: 4%;width: 14%;"><label class=" style_pading_lepel ">الرمز</label></div>
+                        <div class="col-lg-2" style="width: 20%;"><label class=" style_pading_lepel">الوصف عربي</label></div>
+                        <div class="col-lg-2" style="width: 14%;"><label class="style_pading_lepel">الفئة</label></div>
+                        <div class="col-lg-1" style="width: 6%;"><label class="  style_pading_lepel">الكمية المتاحة</label></div>
+                        <div class="col-lg-1" style=" "><label class="  style_pading_lepel2"> سعر الشراء</label></div>
+                        <div class="col-lg-1" style=" "><label class="  style_pading_lepel2"> السعر البيع</label></div>
+                        <div class="col-lg-1" style="width: 13%;"><label class="  style_pading_lepel2">اقل سعر</label></div>
+                        <div class="col-lg-1 "><label class=" style_pading_lepel ">كود الصنف</label></div>
+
+
+                    </div>
+                    <div class="  " id="div_Data" style="margin-right: 1%;">
+
+                    </div>
+                    <span id="btnAddDetails" class="glyphicon glyphicon-plus-sign  display_none"></span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+
+
+
+
+
+    </div>
+
+
+    <div class="modal fade" id="PopupDialog" role="dialog">
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+                <div id="PopupBody" class=" modal-body col-lg-12 col-xs-12 ">
+                    <div id="Men_popu" class="popu animated zoomIn" style="display:block;">
+
+                        <div class="col-lg-12">
+                            <div class="col-lg-3 col-xs-4">
+
+                            </div>
+                            <div class="col-lg-5 col-xs-12">
+                                <span class="" style="font-size: 22px;font-weight: bold;">الكمية</span>
+                            </div>
+                            <div class="col-lg-4 col-xs-12" style="">
+                                <span class="" style="font-size: 22px;font-weight: bold;">السعر</span>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-12" style="">
+
+                            <div class="col-lg-1 col-xs-4">
+
+                            </div>
+                            <div class="col-lg-5 col-xs-4">
+                                <div class="input-group " style="">
+                                    <span class="input-group-btn">
+                                        <button type="button" style="background-color: #4CAF50; " class="btn btn-default btn-number10" id="btnminus_Quantity" data-type="minus" data-field="quant[1]"><span class="glyphicon glyphicon-minus"></span></button>
+                                    </span>
+                                    <input type="text" style="height:36px;" id="txtQuantity" name="quant[1]" class="  form-control   font1" value="1" min="1" max="1000" step="1"><span class="input-group-btn"><button type="button" style="background-color: #f44336;" id="btnplus_Quantity" class="btn btn-default btn-number10" data-type="plus" data-field="quant[1]"><span class="glyphicon glyphicon-plus"></span></button></span>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-5 col-xs-4">
+
+
+                                <div class="input-group ">
+                                    <span class="input-group-btn">
+                                        <button type="button" style="background-color: #4CAF50; " class="btn btn-default btn-number20" id="btnminus_price" data-type="minus" data-field="quant[2]"><span class="glyphicon glyphicon-minus"></span></button>
+                                    </span>
+                                    <input type="text" style="height: 37px;" id="txtPrice" name="quant[2]" class="  form-control   font1" value="0.5" min="0" max="1000" step="0.5"><span class="input-group-btn"><button type="button" style="background-color: #f44336;" id="btnplus_price" class="btn btn-default btn-number20" data-type="plus" data-field="quant[2]"><span class="glyphicon glyphicon-plus"></span></button></span>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="col-lg-12">
+                            <div class=" col-lg-4 col-xs-4" style="margin-right: 10%;">
+
+                            </div>
+                            <div class=" col-lg-3 col-xs-4">
+                                <span class="" style="font-size: 19px;font-weight: bold;">
+                                    <span class="">الاجمالي </span>
+                                </span>
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-lg-12">
+
+                            <div class=" col-lg-4 col-xs-4"></div>
+
+                            <div class="col-lg-4 col-xs-3">
+                                <input id="txtTotal_Popu" type="text" disabled class="form-control">
+                            </div>
+
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="col-lg-4 col-xs-5"></div>
+
+                            <div class="col-lg-2 col-xs-2">
+                                <button id="btn_Edit_Basket" type="button" class="btn btn-success" style="display:none;">
+                                    <span class="glyphicon glyphicon-edit"></span> تعديل
+                                </button>
+                                <button id="btn_Add_Basket" type="button" class="btn btn-info " style="display:block;">
+                                    <span class="glyphicon glyphicon-download"></span> اضافه
+                                </button>
+                            </div>
+
+                            <div class="col-lg-1 col-xs-2"> </div>
+
+                            <div class="col-lg-1 col-xs-2">
+                                <button id="btn_cancel_Popu" type="button" class="btn btn-info " style="background-color: brown;">
+                                    <span class="glyphicon glyphicon-remove"></span> الغاء
+                                </button>
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+@Scripts.Render("~/Bundles/ClientApp")
+@*<script src="~/ClientApp/JsGrid.js"></script>*@
+<script src="~/ClientApp/stock/Items.js"></script>

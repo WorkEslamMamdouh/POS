@@ -1,0 +1,842 @@
+﻿@using Inv.WebUI.Resources
+
+@{
+    ViewBag.Title = "العمليات";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<style>
+    #div_Data .col-lg-1 {
+        width: 9% !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+
+    #DivChargesShow, .col-lg-1, .col-lg-2 {
+        padding-right: 1px !important;
+        padding-left: 1px !important
+    }
+
+    .display_none {
+        display: none !important;
+    }
+
+    .textcentr_pading {
+        padding-right: 45px !important;
+    }
+
+    .textcentr_pading2 {
+        padding-right: 26px !important;
+    }
+
+    .btnplasandmines {
+        display: inline-block;
+        padding: 2px 4px;
+        height: 36px;
+        margin-bottom: 0;
+        font-size: 10px;
+        font-weight: 400;
+        line-height: 1.428571;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        -ms-touch-action: manipulation;
+        touch-action: manipulation;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        background-image: none;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        font-weight: bold;
+    }
+
+    .fontitm3 {
+        float: right;
+        margin: 5px -13px 0px 0px !important;
+        font-size: 25px !important;
+        position: absolute;
+    }
+
+    .fontitm4 {
+        float: right;
+        margin: 5px -20px 0px 0px !important;
+        font-size: 25px !important;
+        position: absolute;
+    }
+
+    #btnAddDetails {
+        font-size: 35px;
+    }
+
+        #btnAddDetails:hover {
+            color: #24b414;
+        }
+
+    #btnAddDetailsCharge {
+        font-size: 35px;
+        right: .8% !important;
+    }
+
+        #btnAddDetailsCharge:hover {
+            color: #24b414;
+        }
+
+    .glyphicon-remove-sign:hover {
+        color: red
+    }
+
+    .disabledDiv {
+        /*pointer-events: none;
+        opacity: 0.4;*/
+    }
+    .disabledDiv {
+        pointer-events: none;
+        opacity: 0.7;
+    }
+
+    .display_none {
+        display: none !important;
+    }
+
+    .textcentr_pading {
+        padding-right: 50px !important;
+    }
+
+    .textcentr_pading {
+        padding-right: 30px !important;
+    }
+
+    .text_cent {
+        text-align: center !important
+    }
+
+
+    .styleborder {
+        border: solid 1px;
+        border-radius: 33px;
+        left: 0.4%;
+    }
+
+    .daen {
+        background-color: #d4feda
+    }
+
+    .maden {
+        background-color: #fbded4
+    }
+</style>
+<style>
+    .centeralign {
+        text-align: center !important
+    }
+
+    .div_lapel:hover {
+        transform-origin: top right;
+        transform: scale3d(1.5, 1.5, 1);
+    }
+    .div_lape4:hover {
+        transform-origin: top right;
+        transform: scale3d(1.5, 1.5, 1);
+    }
+
+    .div_lape2 {
+        transform-origin: top right;
+        transform: scale3d(1.5, 1.5, 1);
+    }
+    .div_lape5 {
+        transform-origin: top right;
+        transform: scale3d(1.5, 1.5, 1);
+    }
+</style>
+<script>
+    $(document).ready(() => {
+
+        $(".div_lapel").hover(function () {
+            $("#div_lapel2").toggleClass("div_lape2");
+        });
+
+        $(".div_lape4").hover(function () {
+            $("#div_lapel3").toggleClass("div_lape2");
+        });
+    });
+
+</script>
+<link href="~/Style_design/Stylecheckbox.css" rel="stylesheet" />
+<script>
+    $(document).ready(function () {
+
+        // Initialize select2
+        $("#ddlCashBox").select2();
+        $("#ddlSalesman").select2();
+        $("#ddlStateType").select2();
+        $("#ddlSeller").select2();
+        $("#ddlCustomer").select2();
+        $("#ddlCustomer2").select2();
+
+        // Read selected option
+        $('#but_read').click(function () {
+            //var username = $('#ddlCashBox option:selected').text();
+            //var userid = $('#ddlCashBox').val();
+
+            var username = $('#ddlSalesman option:selected').text();
+            var userid = $('#ddlSalesman').val();
+
+            var username = $('#ddlStateType option:selected').text();
+            var userid = $('#ddlStateType').val();
+
+            var username = $('#ddlSeller option:selected').text();
+            var userid = $('#ddlSeller').val();
+
+            var username = $('#ddlCustomer option:selected').text();
+            var userid = $('#ddlCustomer').val();
+
+            var username = $('#ddlCustomer2 option:selected').text();
+            var userid = $('#ddlCustomer2').val();
+
+            $('#result').html("id : " + userid + ", name : " + username);
+        });
+    });
+</script>
+<div class="col-lg-12 margingred  borderred">
+    <label id="" class="col-lg-12 labeltitel "><i id="spanlepRentdata" class="ifontowsam fa fa-caret-left" aria-hidden="true"></i> العمليات  </label>
+
+
+    <div id="DivFilter" class="col-lg-12">
+        <div class="col-lg-12">
+            <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2  ">المورد</label>
+            <div class="col-lg-3 col-xs-8">
+                <select id="ddlVendorMaster" name="" class="form-control" style='width: 100%;border-radius: 30px;'></select>
+            </div>
+
+
+            <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2 textcentr_pading ">@SystemResource.App_FromDate</label>
+
+            <div class="col-md-2 col-sm-5 col-xs-10">
+                <input type="date" class="form-control input-sm addable editable" name="GosiJoinDate" id="txtFromDate">
+            </div>
+
+            <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2 textcentr_pading ">@SystemResource.App_ToDate</label>
+
+            <div class="col-md-2 col-sm-5 col-xs-10">
+                <input type="date" class="form-control input-sm addable editable" name="GosiJoinDate" id="txtToDate">
+            </div>
+
+            <div class="col-md-1 col-sm-5 col-xs-10">
+                <button id="btnShow" type="button" class="btn btn-info"><span class="glyphicon glyphicon-save"></span> @SystemResource.App_Show</button>
+
+            </div>
+            <div class="col-md-1 col-sm-5 col-xs-10">
+                <button id="btnadd" type="button" class="btn btn-success">
+                    <span class="glyphicon"></span> @SystemResource.App_Add
+                </button>
+
+            </div>
+        </div>
+
+        <div class="col-lg-12">
+
+            <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2  ">@SystemResource.Men_AccDefSalesmen</label>
+            <div class="col-lg-3 col-xs-8">
+                <select id="ddlSalesmanMaster" name="" class="form-control" style='width: 100%;border-radius: 30px;'></select>
+            </div>
+
+            <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2 textcentr_pading">@SystemResource.App_State</label>
+            <div class="col-lg-2  col-xs-8">
+                <select id="ddlStateType" name="" class="form-control" style='width: 100%;border-radius: 30px;'></select>
+            </div>
+            <div class="col-md-2 col-sm-5 col-xs-10">
+
+            </div>
+
+
+            @*<div class="col-lg-2 col-xs-8">
+
+
+                <button id="btnBack" type="button" class="btn btn-warning"> @SystemResource.App_back <span class="glyphicon glyphicon-save"></span></button>
+                <button id="btnSave" type="button" class="btn btn-success" style="margin-right:9%"> @SystemResource.App_save <span class="glyphicon glyphicon-save"></span></button>
+
+            </div>
+
+            <div class="col-md-1 col-sm-5 col-xs-10">
+                <button id="btnUpdate" type="button" class="btn btn-info ">  @SystemResource.App_Update <span class="glyphicon glyphicon-edit"></span></button>
+
+            </div>*@
+
+
+        </div>
+
+
+        <div id="divMasterGridiv" class="col-lg-12  margingred   ">
+            <div class="col-lg-12 ">
+                @*رقم الفاتورة	العميل	عدد الأصناف	عدد العبوات	الإجمالي	الضريبة	الصافي	العمولة	المطلوب سداده*@
+                <table id="divMasterGrid"></table>
+            </div>
+        </div>
+
+
+
+        <div id="id_divGridDetails" class="row  margingred    ">
+
+
+
+
+            <div id="div_Master_Hedr" class="col-lg-12 margingred ">
+
+                <div class="col-lg-12 ">
+                    <div class="col-lg-1 ">
+                    </div>
+                    <div class="col-lg-7" style="">
+                        <div class="col-lg-1 ">
+                        </div>
+                        <button id="btnReset" type="button" class="marginbtn btn btn-custon-four btndefolt primary-btn-cl"><span class="adminpro-icon  search-choice-focus "></span>       الوضع الحالي      </button>
+                        <button id="btnShow" type="button" class="marginbtn btn btn-custon-four btndefolt primary-btn-cl"><span class="adminpro-icon adminpro-airplay"></span>  اغلاق عملية</button>
+                        <button id="btnPrintTrPDF" type="button" class="marginbtn btn btn-custon-four btndefolt primary-btn-cl"><span class="adminpro-icon adminpro-download-arrow"></span> فتح تريلا</button>
+                        <button id="btnPrintTrEXEL" type="button" class="marginbtn btn btn-custon-four btndefolt primary-btn-cl"><span class="adminpro-icon adminpro-download-arrow"></span> عرض الحمولة</button>
+                        <button id="btnPrintTrview" type="button" class="  btn btn-custon-four btndefolt primary-btn-cl"><span class="adminpro-icon adminpro-paint-roller"></span>  مصروفات تريلا</button>
+                    </div>
+
+                    <div class="col-lg-2 col-xs-8">
+
+
+                        <button id="btnBack_1" type="button" class="btn btn-warning display_none"> تراجع <span class="glyphicon glyphicon-save"></span></button>
+                        <button id="btnSave_1" type="button" class="btn btn-success display_none" style="margin-right:9%"> حفظ <span class="glyphicon glyphicon-save"></span></button>
+
+                    </div>
+
+                    <div class="col-md-1 col-sm-5 col-xs-10">
+                        <button id="btnUpdate_1" type="button" class="btn btn-info ">  تعديل <span class="glyphicon glyphicon-edit"></span></button>
+
+                    </div>
+                </div>
+                <br />
+                <div id="div_Master" class="">
+                    <div class="col-lg-12">
+                        <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2  "> الرقم</label>
+                        <div class="col-md-2 col-sm-5 col-xs-10">
+                            <input type="text" class="form-control input-sm addable editable" name="TrNo" id="txtNumber">
+                        </div>
+
+                        <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2 textcentr_pading ">@SystemResource.App_date</label>
+                        <div class="col-md-2 col-sm-5 col-xs-10">
+                            <input type="date" class="form-control input-sm addable editable" name="" id="txtDate">
+                        </div>
+
+                        <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2 textcentr_pading "> الرقم المرجعي </label>
+                        <div class="col-md-2 col-sm-5 col-xs-10">
+                            <input type="text" class="form-control input-sm addable editable" name="" id="txtReferenceNumber">
+                        </div>
+
+                        <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2 textcentr_pading">@SystemResource.App_State</label>
+                        <div class="col-lg-2  col-xs-8">
+                            <input type="text" class="form-control input-sm addable editable" name="Status_DescA" id="txtReferenceNumber">
+                        </div>
+
+                    </div>
+                    <div class="col-lg-12">
+
+
+
+                        <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2  ">  رقم الشاحنة  </label>
+                        <div class="col-md-2 col-sm-5 col-xs-10">
+                            <input type="text" class="form-control input-sm addable editable" name="TruckNo" id="txtTruckNumber">
+                        </div>
+
+                        <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2  ">  اسم ميناء الدخول </label>
+                        <div class="col-md-2 col-sm-5 col-xs-10">
+                            <input type="text" class="form-control input-sm addable editable" name="PortName" id="">
+                        </div>
+
+                        <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2 textcentr_pading ">المورد</label>
+                        <div class="col-lg-2 col-xs-8">
+                            <select id="ddlVendor" name="" class="form-control" style='width: 100%;border-radius: 30px;'></select>
+                        </div>
+                        <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2 textcentr_pading "> الدولة </label>
+
+                        <div class="col-lg-2 col-xs-8">
+                            <select id="txtNationality" name="" class="form-control" style='width: 100%;border-radius: 30px;'></select>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-12 ">
+
+
+                        <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2   ">  تاريخ التخليص   </label>
+                        <div class="col-md-2 col-sm-5 col-xs-10">
+                            <input type="text" class="form-control input-sm addable editable" name="TrDateH" id="">
+                        </div>
+                        <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2 text_cent "> قيمة البضاعة المسجلة </label>
+                        <div class="col-md-2 col-sm-5 col-xs-10">
+                            <input type="text" class="form-control input-sm addable editable" name="PaperPurchaseValue" id="">
+                        </div>
+                        <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2 text_cent "> رقم الفاتورة الجمركي </label>
+                        <div class="col-md-2 col-sm-5 col-xs-10">
+                            <input type="text" class="form-control input-sm addable editable" name="RefNO" id="">
+                        </div>
+                        <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2 text_cent "> قيمة الضريبة </label>
+                        <div class="col-md-2 col-sm-5 col-xs-10">
+                            <input type="text" class="form-control input-sm addable editable" name="" id="">
+                        </div>
+
+
+                    </div>
+                    <div class="col-lg-12">
+                        <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2  "> وصف الشحنة </label>
+                        <div class="col-md-10 col-sm-5 col-xs-10">
+                            <textarea type="" class="form-control input-sm addable editable" name="Goods_Desc" id=""></textarea>
+                        </div>
+
+
+                    </div>
+                    <div class="col-lg-12">
+                        <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2   "> الملاحظات </label>
+                        <div class="col-md-10 col-sm-5 col-xs-10">
+                            <textarea type="" class="form-control input-sm addable editable" name="Remark" id=""></textarea>
+                        </div>
+
+                    </div>
+                    <br />
+                    <div class="col-lg-12 styleborder">
+                        <div class="col-md-12">
+
+                            <div class="col-md-5 col-sm-5 col-xs-10"> </div>
+                            <label class="col-lg-3 col-xs-4  marginstenig pading_lep  pading_2  " style="font-weight:bold;font-size:18px"> فتح تريلا </label>
+                        </div>
+                        <div class="col-md-2 col-sm-5 col-xs-10"> </div>
+
+                        <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2  "> البائع</label>
+                        <div class="col-md-3 col-sm-5 col-xs-10">
+                            <select id="ddlSalesman" name="" class="form-control input-sm addable editable" style='width: 100%;'></select>
+                        </div>
+
+                        <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2 textcentr_pading ">تارخ الفتح</label>
+                        <div class="col-md-2 col-sm-5 col-xs-10">
+                            <input type="date" class="form-control input-sm addable editable" name="GosiJoinDate" id="txtdateopening">
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<div class="col-lg-12 margingred  borderred">
+    <label id="" class="col-lg-12 labeltitel "><i id="spanlepRentdata" class="ifontowsam fa fa-caret-left" aria-hidden="true"></i> بيانات الحمولة  </label>
+
+    <div class="col-md-12 col-sm-5 col-xs-10">
+        <div class="col-md-9 col-sm-5 col-xs-10">
+        </div>
+        <div class="col-lg-2 col-xs-8">
+
+
+            <button id="btnBack" type="button" class="btn btn-warning"> @SystemResource.App_back <span class="glyphicon glyphicon-save"></span></button>
+            <button id="btnSave" type="button" class="btn btn-success" style="margin-right:9%"> @SystemResource.App_save <span class="glyphicon glyphicon-save"></span></button>
+
+        </div>
+
+        <div class="col-md-1 col-sm-5 col-xs-10">
+            <button id="btnUpdate" type="button" class="btn btn-info ">  @SystemResource.App_Update <span class="glyphicon glyphicon-edit"></span></button>
+
+        </div>
+    </div>
+    <div id="DivShow" class="col-lg-12 " style="overflow:auto ;">
+        <div id=" " class="col-lg-12 font_header" style="bottom: 5px;font-weight:bold!important">
+            <br />
+
+            <div class="col-lg-2">
+                <span style="padding-right: 1px;" class="">@SystemResource.App_Type</span>
+            </div>
+            <div class="col-lg-2">
+                <span class="">@SystemResource.App_Item</span>
+            </div>
+            <div class="col-lg-1" style="margin-right:-1%;">
+                <span class="">الكمية </span>
+            </div>
+            <div class="col-lg-1">
+                <span class="">@SystemResource.App_Price</span>
+            </div>
+            <div class="col-lg-1">
+                <span class="">أقل سعر</span>
+            </div>
+            <div class="col-lg-1">
+                <span class="">@SystemResource.App_total</span>
+            </div>
+            <div class="col-lg-1">
+                <span class="">الكمية المباعة </span>
+            </div>
+            <div class="col-lg-1">
+                <span class="">الفوارغ</span>
+            </div>
+            <div class="col-lg-1" style="right:17px">
+                <span class="">الكمية المتبقية</span>
+            </div>
+
+
+
+        </div>
+
+        <div class="row col-lg-12">
+            <div class="">
+
+                <div class="col-lg-12">
+                    <div class="row " id="div_Data">
+                    </div>
+                    <span id="btnAddDetails" class="glyphicon glyphicon-plus-sign"></span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<div class="col-lg-12 margingred  borderred">
+    <label id="" class="col-lg-12 labeltitel "><i id="spanlepRentdata" class="ifontowsam fa fa-caret-left" aria-hidden="true"></i> المصروفات    </label>
+    <div class="col-lg-12   " id="divEdit">
+
+        <div class="col-md-12 col-sm-5 col-xs-10">
+            <div class="col-md-9 col-sm-5 col-xs-10">
+            </div>
+            <div class="col-lg-2 col-xs-8">
+
+
+                <button id="btnBack" type="button" class="btn btn-warning"> @SystemResource.App_back <span class="glyphicon glyphicon-save"></span></button>
+                <button id="btnSave" type="button" class="btn btn-success" style="margin-right:9%"> @SystemResource.App_save <span class="glyphicon glyphicon-save"></span></button>
+
+            </div>
+
+            <div class="col-md-1 col-sm-5 col-xs-10">
+                <button id="btnUpdate" type="button" class="btn btn-info ">  @SystemResource.App_Update <span class="glyphicon glyphicon-edit"></span></button>
+
+            </div>
+        </div>
+        <div id="DivChargesShow" class="col-lg-12 " style="overflow:auto ;">
+
+            <div id=" " class="col-lg-12 font_header" style="bottom: 5px; right:88px;font-weight:bold">
+                <br />
+
+                <div class="col-lg-1" style="right:-76px">
+
+                    <span style="padding-right: 1px;" class="">مسلسل</span>
+
+                </div>
+                <div class="col-lg-1" style="right:-31px">
+                    <span class="">الإضافة</span>
+                </div>
+
+                <div class="col-lg-1" style="right: 18px">
+                    <span class="">نوع الإضافة</span>
+                </div>
+                <div class="col-lg-1" style="right: 30px">
+                    <span class=""> القيمة</span>
+                </div>
+                <div class="col-lg-2" style="right: 47px">
+                    <span class="">نوع الضريبة</span>
+                </div>
+
+                <div class="col-lg-1" style="right:22px">
+                    <span class="">الضريبة</span>
+
+                </div>
+                <div class="col-lg-1" style="right:0px">
+                    <span class="">القيمة بعد الضريبة</span>
+                </div>
+
+                <div class="col-lg-2" style="left:-18px">
+                    <span class="">نقدى\أجل</span>
+                </div>
+                <div class="col-lg-1" style="left:4%">
+                    <span class="">رقم الفاتورة</span>
+                </div>
+                <div class="col-lg-1">
+                    <span class="">تاريخ الفاتورة</span>
+                </div>
+                <div class="col-lg-1" style="position: absolute;left: -16%;top: 37%;">
+                    <span class="">المورد</span>
+                </div>
+            </div>
+
+
+            <div class="row col-lg-12">
+                <div class="">
+
+                    <div class="col-lg-12">
+                        <div class="row " id="div_ChargesData">
+                        </div>
+                        <span id="btnAddDetailsCharge" class="glyphicon glyphicon-plus-sign"></span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<div class="col-lg-12 margingred  borderred">
+    <label id="" class="col-lg-12 labeltitel "><i id="spanlepRentdata" class="ifontowsam fa fa-caret-left" aria-hidden="true"></i> اغلاق عملبة  </label>
+
+    <div id=" " class="col-lg-12 margingred">
+
+        <div class="col-lg-12">
+            <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2  "> تاريخ الاغلاق</label>
+            <div class="col-md-2 col-sm-5 col-xs-10">
+                <input type="date" class="form-control input-sm addable editable" name="GosiJoinDate" id="txtDate">
+            </div>
+
+            <div class="col-md-6 col-sm-12 col-xs-12">
+            </div>
+            <div class="col-lg-2 col-xs-8">
+
+
+                <button id="btnBack" type="button" class="btn btn-warning"> @SystemResource.App_back <span class="glyphicon glyphicon-save"></span></button>
+                <button id="btnSave" type="button" class="btn btn-success" style="margin-right:9%"> @SystemResource.App_save <span class="glyphicon glyphicon-save"></span></button>
+
+            </div>
+
+            <div class="col-md-1 col-sm-5 col-xs-10">
+                <button id="btnUpdate" type="button" class="btn btn-info ">  @SystemResource.App_Update <span class="glyphicon glyphicon-edit"></span></button>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-lg-6">
+            <div class="col-lg-12">
+                <label class="col-lg-2 col-xs-4  marginstenig pading_lep  pading_2  ">اجمالي المبيعات</label>
+                <div class="col-md-4 col-sm-5 col-xs-10">
+                    <input type="text" class="form-control input-sm addable editable daen" name="" id="">
+                </div>
+
+            </div>
+            <div class="col-lg-12">
+                <label class="col-lg-2 col-xs-4  marginstenig pading_lep  pading_2  ">  اجمالي المصروفات </label>
+                <div class="col-md-4 col-sm-5 col-xs-10"></div>
+
+                <div class="col-md-4 col-sm-5 col-xs-10">
+                    <input type="text" class="form-control input-sm addable editable maden" name="" id="">
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <label class="col-lg-2 col-xs-4  marginstenig pading_lep  pading_2  "> تسويات </label>
+                <div class="col-md-4 col-sm-5 col-xs-10"></div>
+
+                <div class="col-md-4 col-sm-5 col-xs-10">
+                    <input type="text" class="form-control input-sm addable editable maden" name="" id="">
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <label class="col-lg-2 col-xs-4  marginstenig pading_lep  pading_2  ">ملاحظات التسوية</label>
+ 
+                <div class="col-md-8 col-sm-5 col-xs-10">
+                    <textarea type="text" class="form-control input-sm addable editable " name="" id=""></textarea>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-lg-6">
+            <div class="col-lg-12">
+                <label class="col-lg-2 col-xs-4  marginstenig pading_lep  pading_2  "> صافي المابيعات  </label>
+                <div class="col-md-4 col-sm-5 col-xs-10">
+                    <input type="text" class="form-control input-sm addable editable daen" name="" id="">
+                </div>
+
+            </div>
+            <div class="col-lg-12">
+                <label class="col-lg-2 col-xs-4  marginstenig pading_lep  pading_2  "> عمولة الشركة </label>
+                <div class="col-md-2 col-sm-5 col-xs-10"></div>
+                <div class="col-md-2 col-sm-5 col-xs-10">
+                    <input type="text" placeholder="%" class="form-control input-sm addable editable maden" name="" id="">
+                    <i style="position: absolute;left: -10%;top: 17%;">%</i>
+                </div>
+
+                <div class="col-md-4 col-sm-5 col-xs-10">
+                    <input type="text" class="form-control input-sm addable editable maden" name="" id="">
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <label class="col-lg-2 col-xs-4  marginstenig pading_lep  pading_2  ">  عمولة البائع </label>
+                <div class="col-md-4 col-sm-5 col-xs-10">
+                    <input type="text" class="form-control input-sm addable editable daen" name="" id="">
+                </div>
+
+            </div>
+            <div class="col-lg-12">
+                <label class="col-lg-2 col-xs-4  marginstenig pading_lep  pading_2  ">   صافي الارباح   </label>
+                <div class="col-md-4 col-sm-5 col-xs-10">
+                    <input type="text" class="form-control input-sm addable editable daen" name="" id="">
+                </div>
+
+            </div>
+            <div class="col-lg-12">
+                <label class="col-lg-2 col-xs-4  marginstenig pading_lep  pading_2  "> قيمة الشراء </label>
+                <div class="col-md-4 col-sm-5 col-xs-10"></div>
+
+                <div class="col-md-4 col-sm-5 col-xs-10">
+                    <input type="text" class="form-control input-sm addable editable maden" name="" id="">
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="col-lg-12">
+            <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2 textcentr_pading ">ملاحظات الغلاق </label>
+            <div class="col-md-10 col-sm-5 col-xs-10">
+                <textarea type="" class="form-control input-sm addable editable" name="" id=""></textarea>
+            </div>
+
+        </div>
+
+        <br />
+        <div class="col-lg-12">
+            <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2  borderbottom "> @SystemResource.App_Create </label>
+            <input id="txtCreatedBy" name="CreatedBy" type="text" disabled class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2  borderbottom ">
+            <input id="txtCreatedAt" name="CreatedAt" type="text" disabled class="col-lg-2 col-xs-4  marginstenig pading_lep  pading_2 style_borderbottom">
+            <div class="col-lg-2"> </div>
+            <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2  borderbottom "> @SystemResource.App_Update </label>
+            <input id="txtUpdatedBy" name="UpdatedBy" type="text" disabled class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2  borderbottom">
+            <input id="txtUpdatedAt" name="UpdatedAt" type="text" disabled class="col-lg-2 col-xs-4  marginstenig pading_lep  pading_2 style_borderbottom">
+
+
+        </div>
+
+    </div>
+
+</div>
+<div class="col-lg-12 margingred  borderred">
+    <label id="" class="col-lg-12 labeltitel "><i id="spanlepRentdata" class="ifontowsam fa fa-caret-left" aria-hidden="true"></i>   الوضع المالي   </label>
+    <div class=" col-lg-12 location">
+        <div id="div_lapel2" class=" col-lg-7">
+            <div class="col-lg-2 col-xs-2"></div>
+            <div class="  col-lg-3 col-xs-2">
+                <label class=" pading_lep  pading_2 centeralign"> القيمة </label>
+            </div>
+            <div class="  col-lg-3 col-xs-2">
+                <label class=" pading_lep  pading_2 centeralign"> الضريبة </label>
+            </div>
+            <div class="  col-lg-3 col-xs-2">
+                <label class=" pading_lep  pading_2 centeralign"> القيمة بعد الضريبة </label>
+            </div>
+
+
+
+        </div>
+        <div class="div_lapel col-lg-7">
+            <div class="  col-lg-2 col-xs-2">
+                <label class=" pading_lep  pading_2 centeralign"> اجمالي المبيعات الاجلة </label>
+            </div>
+            <div class="  col-lg-3 col-xs-2">
+                <label class=" pading_lep  pading_2 centeralign"> 111111111111 </label>
+            </div>
+            <div class="  col-lg-3 col-xs-2">
+                <label class=" pading_lep  pading_2 centeralign"> 222222222222 </label>
+            </div>
+            <div class="  col-lg-3 col-xs-2">
+                <label class=" pading_lep  pading_2 centeralign"> 333333333333 </label>
+            </div>
+        </div>
+        <div class="div_lapel col-lg-7">
+            <div class=" col-lg-2 col-xs-2">
+                <label class=" pading_lep  pading_2 centeralign"> اجمالي المبيعات النقدية </label>
+            </div>
+            <div class=" col-lg-3 col-xs-2">
+                <label class=" pading_lep  pading_2 centeralign"> 44444444444 </label>
+            </div>
+            <div class=" col-lg-3 col-xs-2">
+                <label class=" pading_lep  pading_2 centeralign"> 55555555555 </label>
+            </div>
+            <div class=" col-lg-3 col-xs-2">
+                <label class=" pading_lep  pading_2 centeralign"> 666666666666 </label>
+            </div>
+
+        </div>
+        <div class="div_lapel col-lg-7">
+            <div class=" col-lg-2 col-xs-2" style="padding-left: 0px!important;padding-right: 0px!important;">
+                <label class=" pading_lep  pading_2 centeralign">اجمالي المبيعات  </label>
+            </div>
+            <div class=" col-lg-3 col-xs-2">
+                <label class=" pading_lep  pading_2 centeralign"> 44444444444 </label>
+            </div>
+            <div class=" col-lg-3 col-xs-2">
+                <label class=" pading_lep  pading_2 centeralign"> 55555555555 </label>
+            </div>
+            <div class=" col-lg-3 col-xs-2">
+                <label class=" pading_lep  pading_2 centeralign"> 666666666666 </label>
+            </div>
+
+
+        </div>
+
+        <div id="div_lapel3" class="div_lapel3 col-lg-7">
+            <div class="col-lg-2 col-xs-2">
+                <label class=" pading_lep  pading_2 centeralign"> عدد الاصناف </label>
+            </div>
+            <div class="col-lg-3 col-xs-2">
+                <label class=" pading_lep  pading_2 centeralign"> عدد العبوات </label>
+            </div>
+            <div class="col-lg-3 col-xs-2">
+                <label class=" pading_lep  pading_2 centeralign"> القيمة التقدرية </label>
+            </div>
+
+
+
+        </div>
+        <div class="div_lape4 col-lg-7">
+            <div class="col-lg-2 col-xs-2">
+                <label class=" pading_lep  pading_2 centeralign"> number of items</label>
+            </div>
+            <div class="col-lg-3 col-xs-2">
+                <label class=" pading_lep  pading_2 centeralign"> number of packages    </label>
+            </div>
+            <div class="col-lg-3 col-xs-2">
+                <label class=" pading_lep  pading_2 centeralign"> The cash value </label>
+            </div>
+
+
+
+        </div>
+        <div id=" " class="col-lg-12 font_header" style="bottom: 5px;font-weight:bold">
+            <br />
+
+            <div class="col-lg-1" style=""><span class="">مسلسل</span></div>
+            <div class="col-lg-1" style=""><span class="">التاريخ</span></div>
+            <div class="col-lg-1" style=""><span class="">المبلغ</span></div>
+            <div class="col-lg-2" style=""><span class=""> حساب الايداع</span></div>
+            <div class="col-lg-3" style=""><span class="">ملاحظات</span></div>
+
+        </div>
+        <div class="row col-lg-12">
+            <div class="">
+
+                <div id="data_lebel" class="col-lg-12">
+                    
+                    <span id="btnAddDetailslebel" class="glyphicon glyphicon-plus-sign"></span>
+
+                </div>
+
+            </div>
+
+        </div>
+        
+    </div>
+
+
+</div>
+
+
+@Scripts.Render("~/Bundles/ClientApp")
+    <script src="~/ClientApp/JsGrid.js"></script>
+    <script src="~/ClientApp/Processes/Processes.js"></script> 

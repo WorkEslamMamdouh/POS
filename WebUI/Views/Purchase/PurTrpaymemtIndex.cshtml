@@ -1,0 +1,170 @@
+﻿@using Inv.WebUI.Resources
+@{
+    ViewBag.Title = @SystemResource.Purchase;
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<style>
+    .disabledDiv {
+        pointer-events: none;
+        opacity: 0.4;
+    }
+
+    .display_none {
+        display: none !important;
+    }
+
+    .textcentr_pading {
+        padding-right: 50px !important;
+    }
+</style>
+<link href="~/Style_design/Stylecheckbox.css" rel="stylesheet" />
+<script>
+    $(document).ready(function () {
+
+        // Initialize select2
+        $("#ddlCashBox").select2();
+        $("#ddlSalesman").select2();
+      //  $("#ddlStateType").select2();
+        $("#ddlSeller").select2();
+        $("#ddlCustomer").select2();
+        $("#ddlCustomer2").select2();
+
+        // Read selected option
+        $('#but_read').click(function () {
+            //var username = $('#ddlCashBox option:selected').text();
+            //var userid = $('#ddlCashBox').val();
+
+            var username = $('#ddlSalesman option:selected').text();
+            var userid = $('#ddlSalesman').val();
+
+            //var username = $('#ddlStateType option:selected').text();
+            //var userid = $('#ddlStateType').val();
+
+            var username = $('#ddlSeller option:selected').text();
+            var userid = $('#ddlSeller').val();
+
+            var username = $('#ddlCustomer option:selected').text();
+            var userid = $('#ddlCustomer').val();
+
+            var username = $('#ddlCustomer2 option:selected').text();
+            var userid = $('#ddlCustomer2').val();
+
+            $('#result').html("id : " + userid + ", name : " + username);
+        });
+    });
+</script>
+<div class="col-lg-12 margingred  borderred">
+    <div class="col-lg-12">
+        <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2  ">@SystemResource.Men_AccDefBox</label>
+        <div class="col-lg-3 col-xs-8">
+            <select id="ddlCashBox" name="" class="" style='width: 100%;border-radius: 30px;'></select>
+        </div>
+
+        @*<label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2  "> @SystemResource.App_Cashbox  </label>
+
+            <div class="col-lg-3 col-xs-8">
+                <select id="ddlCashBox" name="" class="" style='width: 100%;border-radius: 30px;'></select>
+            </div>*@
+
+
+
+        <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2 textcentr_pading ">@SystemResource.App_FromDate</label>
+
+        <div class="col-md-2 col-sm-5 col-xs-10">
+            <input type="date" class="form-control input-sm addable editable" name="GosiJoinDate" id="txtStartDate">
+        </div>
+
+        <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2 textcentr_pading ">@SystemResource.App_ToDate</label>
+
+        <div class="col-md-2 col-sm-5 col-xs-10">
+            <input type="date" class="form-control input-sm addable editable" name="GosiJoinDate" id="txtEndDate">
+        </div>
+
+        <div class="col-md-1 col-sm-5 col-xs-10">
+            <button id="btnExecute" type="button" class="btn btn-success">
+                <span class="glyphicon"></span> تنفيذ
+            </button>
+
+        </div>
+        <div class="col-md-1 col-sm-5 col-xs-10">
+            <button id="btnShow" type="button" class="btn btn-info">
+                <span class="glyphicon"></span> @SystemResource.App_Show
+            </button>
+
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+
+        <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2  ">@SystemResource.I_Vendor</label>
+        <div class="col-lg-3 col-xs-8">
+            <select id="ddlVendor" name="" class="" style='width: 100%;border-radius: 30px;'></select>
+        </div>
+
+        <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2  ">@SystemResource.Men_AccDefSalesmen</label>
+        <div class="col-lg-3 col-xs-8">
+            <select id="ddlSalesman" name="" class="" style='width: 100%;border-radius: 30px;'></select>
+        </div>
+
+        <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2 textcentr_pading">@SystemResource.App_State</label>
+        <div class="col-lg-3  col-xs-8">
+            <select id="ddlStateType" name="" class="" style='width: 100%;border-radius: 30px;'></select>
+        </div>
+        <div class="col-md-2 col-sm-5 col-xs-10">
+
+        </div>
+
+
+
+
+    </div>
+
+    <div id="DivMassage" class="col-lg-12  margingred  borderred display_none">
+
+        <h4 id="Text_Massage" style=""> رساله </h4>
+
+    </div>
+
+    <div id="id_divGridDetails" class="row  margingred    " style="display: none;">
+        <div class="col-lg-12 ">
+            <div class="col-md-3 col-sm-5" style="">
+                <input id="txtSearchBox1" type="text" class="form-control  text_Display" placeholder="ابحث" />
+            </div>
+        </div>
+        <div class="col-lg-12 display_none" id="divGrid">
+            <table id="divGridDetails"></table>
+        </div>
+
+        <div class="col-lg-12 display_none" id="divGridDetailsTot">
+            <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2 textcentr_pading">   @SystemResource.App_Net</label>
+
+            <div class="col-lg-1">
+                <input id="txtNetTot" name="" disabled type="number" class="form-control  text_Display">
+            </div>
+           
+            <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2  ">@SystemResource.App_TobePaid</label>
+
+            <div class="col-lg-1">
+
+                <input id="txtPaidAmountTot" disabled name="" type="number" class="form-control  text_Display">
+            </div>
+            <label class="col-lg-1 col-xs-4  marginstenig pading_lep  pading_2 textcentr_pading">   @SystemResource.App_CashPaid</label>
+
+            <div class="col-lg-2">
+
+                <input id="txtCashTot" name="" disabled type="number" class="form-control  text_Display">
+
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+
+</div>
+
+@Scripts.Render("~/Bundles/ClientApp")
+<script src="~/ClientApp/JsGrid.js"></script>
+<script src="~/ClientApp/FundMovement/PurTrpaymemt.js"></script>
