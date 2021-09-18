@@ -26,6 +26,9 @@ namespace Items {
     var btnEdit: HTMLButtonElement;
     var btnShow: HTMLButtonElement;
     var btnAddQty: HTMLButtonElement;
+    var btnAddOldItem: HTMLButtonElement;
+
+
     var txt_Barcode: HTMLInputElement;
     var txt_Quantity: HTMLInputElement;
     var txt_ItemName: HTMLInputElement;
@@ -35,7 +38,7 @@ namespace Items {
     //var sys: _shared = new _shared();
     var SysSession: SystemSession = GetSystemSession();
     var Model: PRODUCT = new PRODUCT();
-    
+
     var CountGrid = 0;
     var compcode: Number;//SharedSession.CurrentEnvironment.CompCode;
     var btnback: HTMLButtonElement;
@@ -51,6 +54,9 @@ namespace Items {
     var flag_Display = 0;
     var StocK = "All";
     var ID_CAT;
+    var ID_CAT_Old =0; 
+    var PRODUCT_ID = 0;
+
     export function InitalizeComponent() {
         debugger
         if (SysSession.CurrentEnvironment.ScreenLanguage = "ar") {
@@ -113,6 +119,9 @@ namespace Items {
         btnsave = document.getElementById("btnsave") as HTMLButtonElement;
         btnback = document.getElementById("btnback") as HTMLButtonElement;
         btnAddQty = document.getElementById("btnAddQty") as HTMLButtonElement;
+        btnAddOldItem = document.getElementById("btnAddOldItem") as HTMLButtonElement;
+
+
         txt_Barcode = document.getElementById("txt_Barcode") as HTMLInputElement;
         txt_Quantity = document.getElementById("txt_Quantity") as HTMLInputElement;
         txt_ItemName = document.getElementById("txt_ItemName") as HTMLInputElement;
@@ -125,9 +134,20 @@ namespace Items {
         btnAddDetails.onclick = AddNewRow;
         btnsave.onclick = btnsave_onClick;
         btnback.onclick = btnback_onclick;
+        btnAddOldItem.onclick = btnAddOldItem_onclick;
+
+
         //btnShow.onclick = btnShow_onclick;
         txt_Barcode.onchange = txt_Barcode_onchange;
         btnAddQty.onclick = btnAddQty_onclick;
+    }
+
+
+    function btnAddOldItem_onclick() {
+
+        $("#PopupDialog").modal("show");
+
+
     }
 
 
@@ -200,7 +220,7 @@ namespace Items {
             '<div class="col-lg-2"><select id="select_Type_Item' + cnt + '" class="form-control" disabled=""></select></div> ' +
             '<div class="col-lg-1"><input id="txtOnhandQty' + cnt + '" type="number" disabled="" class="form-control right2 "></div> ' +
             '<div class="col-lg-1"><input id="txtPurchasing_price' + cnt + '" type="number" disabled="" class="form-control right2"></div> ' +
-            '<div class="col-lg-2"><select id="dllType' + cnt + '" class="form-control" disabled="">  <option value="0">سلعة</option> <option value="1">خدمة</option></select></div> ' +
+            '<div class="col-lg-1"><select id="dllType' + cnt + '" class="form-control" disabled="">  <option value="0">سلعة</option> <option value="1">خدمة</option></select></div> ' +
             '<div class="col-lg-1"><input id="txtUnitPrice' + cnt + '" type="number" disabled="" class="form-control right2"></div> ' +
             '<div class="col-lg-1"><input id="txtMinUnitPrice' + cnt + '" type="number" disabled="" class="form-control right2"></div> ' +
             '<div class="col-lg-2"><input id="Serial' + cnt + '" type="number" disabled="" class="form-control right2"></div> ' +
@@ -234,7 +254,7 @@ namespace Items {
         });
         $("#dllType" + cnt).on('change', function () {
             if ($("#txt_StatusFlag" + cnt).val() != "i")
-                $("#txt_StatusFlag" + cnt).val("u"); 
+                $("#txt_StatusFlag" + cnt).val("u");
         });
         $("#select_Type_Item" + cnt).on('change', function () {
 
@@ -418,8 +438,6 @@ namespace Items {
     function Update() {
         Assign();
 
-        console.log(BilldDetail);
-
 
 
 
@@ -480,7 +498,7 @@ namespace Items {
                 debugger
                 Model.StatusFlag = StatusFlag.toString();
                 Model.PRODUCT_ID = Number($("#txtID" + i).val());
-                Model.ID_CAT = Number( $('#select_Type_Item' + i).val());
+                Model.ID_CAT = Number($('#select_Type_Item' + i).val());
                 Model.PRODUCT_NAME = $("#txtDescA" + i).val();
                 Model.TrType = Number($("#dllType" + i).val());
                 Model.PRODUCT_QET = Number($("#txtOnhandQty" + i).val());
@@ -538,6 +556,7 @@ namespace Items {
     function txt_Barcode_onchange() {
         debugger
         let Serial = txt_Barcode.value;
+
         Ajax.Callsync({
             type: "Get",
             url: sys.apiUrl("Items", "Getbyserial"),
@@ -549,34 +568,96 @@ namespace Items {
                     //debugger
                     DetailsBar = result.Response as Array<PRODUCT>;
                     Qtys = DetailsBar[0].PRODUCT_QET;
-                    txt_ItemName.value = DetailsBar[0].PRODUCT_NAME
+                    txt_ItemName.value = DetailsBar[0].PRODUCT_NAME;
+                    $('#txt_PRODUCT_PRICE').val(DetailsBar[0].PRODUCT_PRICE);
+                    $('#txt_MinUnitPrice').val(DetailsBar[0].MinUnitPrice);
+                    $('#txt_PRODUCT_Purchasing_price').val(DetailsBar[0].PRODUCT_Purchasing_price);
+                    PRODUCT_ID = DetailsBar[0].PRODUCT_ID;
+                    ID_CAT_Old = DetailsBar[0].ID_CAT;
                 }
                 refresh();
             }
         });
     }
+    function Vladshin_Popup() {
+
+        if (txt_ItemName.value.trim() == '' ) {
+            MessageBox.Show("برجاء ادخال الاسم", "تحزير");
+            Errorinput(txt_ItemName);
+            return false;
+        } 
+        if (txt_Quantity.value.trim() == '' || txt_Quantity.value == '0') {
+            MessageBox.Show("برجاء ادخال الكميه", "تحزير");
+            Errorinput(txt_Quantity); 
+            return false;
+        } 
+        if ($('#txt_PRODUCT_Purchasing_price').val().trim() == '' || $('#txt_PRODUCT_Purchasing_price').val() == '0') {
+            MessageBox.Show("برجاء ادخال سعر الشراء", "تحزير");
+            Errorinput($('#txt_PRODUCT_Purchasing_price')); 
+            return false;
+        } 
+        if ($('#txt_PRODUCT_PRICE').val().trim() == '' || $('#txt_PRODUCT_PRICE').val() == '0') {
+            MessageBox.Show("برجاء ادخال السعر", "تحزير");
+            Errorinput($('#txt_PRODUCT_PRICE')); 
+            return false;
+        } 
+        if ($('#txt_MinUnitPrice').val().trim() == '' || $('#txt_MinUnitPrice').val() == '0') {
+            MessageBox.Show("برجاء ادخال اقل سعر", "تحزير");
+            Errorinput($('#txt_MinUnitPrice')); 
+            return false;
+        }
+
+        return true;
+
+    }
     function btnAddQty_onclick() {
-        debugger
+      
+        if (!Vladshin_Popup())  
+            return 
+
+
+
+
         let Serial = txt_Barcode.value;
         let qty = Qtys + Number(txt_Quantity.value);
-     
+
+
+        Model = new PRODUCT();
+
+        Model.serial = Serial;
+        Model.PRODUCT_QET = qty;
+        Model.PRODUCT_Purchasing_price = $('#txt_PRODUCT_Purchasing_price').val(); 
+        Model.PRODUCT_PRICE = $('#txt_PRODUCT_PRICE').val();
+        Model.MinUnitPrice = $('#txt_MinUnitPrice').val();
+        Model.PRODUCT_NAME = txt_ItemName.value;
+        Model.PRODUCT_ID = PRODUCT_ID;
+        Model.ID_CAT = ID_CAT_Old; 
+
+         
         Ajax.Callsync({
-            type: "Get",
+            type: "Post",
             url: sys.apiUrl("Items", "UpdateQTy"),
-            data: { Serial: Serial, Qty: qty},
+            data: JSON.stringify(Model),
             success: (d) => {
 
                 let result = d as BaseResponse;
                 if (result.IsSuccess == true) {
-                    MessageBox.Show("تم الحفظ", "الحفظ");
+                    MessageBox.Show("تم التعديل", "الحفظ");
                     txt_ItemName.value = "";
                     txt_Quantity.value = "";
                     txt_Barcode.value = "";
+                    $('#txt_PRODUCT_PRICE').val('');
+                    $('#txt_MinUnitPrice').val('');
+                    $('#txt_PRODUCT_Purchasing_price').val('');
+                    PRODUCT_ID = 0;
+                    ID_CAT_Old = 0;
                     refresh();
                 }
-                else {   MessageBox.Show(result.ErrorMessage, "خطأ"); }
+                else { MessageBox.Show(result.ErrorMessage, "خطأ"); }
             }
         });
+
+       
     }
 
 
@@ -834,7 +915,7 @@ namespace Items {
         for (var i = 0; i < CountGrid; i++) {
             if (i != rowno) {
 
-                if ($("#txt_StatusFlag" + i).val() == "d" || $("#txt_StatusFlag" + i).val() == "d" ) {
+                if ($("#txt_StatusFlag" + i).val() == "d" || $("#txt_StatusFlag" + i).val() == "d") {
                     return true;
 
                 }

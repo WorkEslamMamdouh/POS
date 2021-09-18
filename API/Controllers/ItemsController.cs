@@ -71,14 +71,15 @@ namespace API.Controllers
 
 
 
-        [HttpGet, AllowAnonymous]
-        public IHttpActionResult UpdateQTy(string Serial, int Qty)
+        [HttpPost, AllowAnonymous]
+        public IHttpActionResult UpdateQTy([FromBody]PRODUCT PRODUCTAll)
         {
             if (ModelState.IsValid)
             {
-                var Item = db.Database.ExecuteSqlCommand("UPDATE PRODUCT SET PRODUCT_QET ="+Qty+" where serial = "+Serial+"");
-
-                return Ok(new BaseResponse(Item));
+                //var Item = db.Database.ExecuteSqlCommand("UPDATE PRODUCT SET PRODUCT_QET ="+Qty+" where serial = "+Serial+"");
+                 
+                var updated = ItemServices.Update(PRODUCTAll); 
+                return Ok(new BaseResponse(100));
 
             }
             return BadRequest(ModelState);
