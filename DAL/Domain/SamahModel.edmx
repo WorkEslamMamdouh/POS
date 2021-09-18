@@ -636,6 +636,9 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
           <Property Name="Confirmation" Type="bit" />
           <Property Name="USER_CODE" Type="nvarchar" MaxLength="50" />
           <Property Name="CUSTOMER_ID" Type="int" />
+          <Property Name="type_order" Type="nvarchar" MaxLength="50" />
+          <Property Name="Name_Pilot" Type="nvarchar" MaxLength="50" />
+          <Property Name="Namber_Order_Delivery" Type="int" />
         </EntityType>
         <Function Name="Add_Emp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="user_name" Type="nvarchar" Mode="In" />
@@ -1121,7 +1124,10 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
     [ReviewSalesMaster].[Tax] AS [Tax], 
     [ReviewSalesMaster].[Confirmation] AS [Confirmation], 
     [ReviewSalesMaster].[USER_CODE] AS [USER_CODE], 
-    [ReviewSalesMaster].[CUSTOMER_ID] AS [CUSTOMER_ID]
+    [ReviewSalesMaster].[CUSTOMER_ID] AS [CUSTOMER_ID], 
+    [ReviewSalesMaster].[type_order] AS [type_order], 
+    [ReviewSalesMaster].[Name_Pilot] AS [Name_Pilot], 
+    [ReviewSalesMaster].[Namber_Order_Delivery] AS [Namber_Order_Delivery]
     FROM [dbo].[ReviewSalesMaster] AS [ReviewSalesMaster]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
@@ -1500,7 +1506,6 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
           <EntitySet Name="IQ_Purchases_Details" EntityType="SamahModel.IQ_Purchases_Details" />
           <EntitySet Name="IQ_Purchases_Master" EntityType="SamahModel.IQ_Purchases_Master" />
           <EntitySet Name="ReviewSalesItemInfoes" EntityType="SamahModel.ReviewSalesItemInfo" />
-          <EntitySet Name="ReviewSalesMasters" EntityType="SamahModel.ReviewSalesMaster" />
           <FunctionImport Name="Original_Purchases_receipt" ReturnType="Collection(SamahModel.Original_Purchases_receipt_Result)">
           <Parameter Name="TrNo" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -1509,6 +1514,7 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
           </FunctionImport>
           <EntitySet Name="PRODUCTs" EntityType="SamahModel.PRODUCT" />
           <FunctionImport Name="New_Data_Bes" />
+          <EntitySet Name="ReviewSalesMasters" EntityType="SamahModel.ReviewSalesMaster" />
           </EntityContainer>
         <ComplexType Name="insert_Table_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
@@ -2358,25 +2364,6 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
           <Property Name="PRODUCT_QET" Type="Int32" />
           <Property Name="PRODUCT_ID" Type="Int32" />
         </EntityType>
-        <EntityType Name="ReviewSalesMaster">
-          <Key>
-            <PropertyRef Name="ID_ORDER_Delivery" />
-          </Key>
-          <Property Name="ID_ORDER_Delivery" Type="Int32" Nullable="false" />
-          <Property Name="Date_Order_Delivery" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CUSTOMER_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CUSTOMER_ADDRES" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PHONE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CUSTOMER_ADDRES_2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Total_All" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="EMPLOYEE_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Date" Type="DateTime" Precision="0" />
-          <Property Name="EMPLOYEE_ID" Type="Int32" />
-          <Property Name="Tax" Type="Double" />
-          <Property Name="Confirmation" Type="Boolean" />
-          <Property Name="USER_CODE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CUSTOMER_ID" Type="Int32" />
-        </EntityType>
         <ComplexType Name="Original_Purchases_receipt_Result">
           <Property Type="Int32" Name="TrNo" Nullable="true" />
           <Property Type="String" Name="Tr_Date" Nullable="true" MaxLength="50" />
@@ -2442,6 +2429,28 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
           <Property Name="ID_CAT" Type="Int32" />
           <Property Name="serial" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TrType" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ReviewSalesMaster">
+          <Key>
+            <PropertyRef Name="ID_ORDER_Delivery" />
+          </Key>
+          <Property Name="ID_ORDER_Delivery" Type="Int32" Nullable="false" />
+          <Property Name="Date_Order_Delivery" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CUSTOMER_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CUSTOMER_ADDRES" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PHONE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CUSTOMER_ADDRES_2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Total_All" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="EMPLOYEE_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="EMPLOYEE_ID" Type="Int32" />
+          <Property Name="Tax" Type="Double" />
+          <Property Name="Confirmation" Type="Boolean" />
+          <Property Name="USER_CODE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CUSTOMER_ID" Type="Int32" />
+          <Property Name="type_order" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name_Pilot" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Namber_Order_Delivery" Type="Int32" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -3440,26 +3449,6 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ReviewSalesMasters">
-            <EntityTypeMapping TypeName="SamahModel.ReviewSalesMaster">
-              <MappingFragment StoreEntitySet="ReviewSalesMaster">
-                <ScalarProperty Name="CUSTOMER_ID" ColumnName="CUSTOMER_ID" />
-                <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
-                <ScalarProperty Name="Confirmation" ColumnName="Confirmation" />
-                <ScalarProperty Name="Tax" ColumnName="Tax" />
-                <ScalarProperty Name="EMPLOYEE_ID" ColumnName="EMPLOYEE_ID" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="EMPLOYEE_NAME" ColumnName="EMPLOYEE_NAME" />
-                <ScalarProperty Name="Total_All" ColumnName="Total_All" />
-                <ScalarProperty Name="CUSTOMER_ADDRES_2" ColumnName="CUSTOMER_ADDRES_2" />
-                <ScalarProperty Name="PHONE" ColumnName="PHONE" />
-                <ScalarProperty Name="CUSTOMER_ADDRES" ColumnName="CUSTOMER_ADDRES" />
-                <ScalarProperty Name="CUSTOMER_NAME" ColumnName="CUSTOMER_NAME" />
-                <ScalarProperty Name="Date_Order_Delivery" ColumnName="Date_Order_Delivery" />
-                <ScalarProperty Name="ID_ORDER_Delivery" ColumnName="ID_ORDER_Delivery" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="Original_Purchases_receipt" FunctionName="SamahModel.Store.Original_Purchases_receipt">
             <ResultMapping>
               <ComplexTypeMapping TypeName="SamahModel.Original_Purchases_receipt_Result">
@@ -3536,6 +3525,29 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="New_Data_Bes" FunctionName="SamahModel.Store.New_Data_Bes" />
+          <EntitySetMapping Name="ReviewSalesMasters">
+            <EntityTypeMapping TypeName="SamahModel.ReviewSalesMaster">
+              <MappingFragment StoreEntitySet="ReviewSalesMaster">
+                <ScalarProperty Name="Namber_Order_Delivery" ColumnName="Namber_Order_Delivery" />
+                <ScalarProperty Name="Name_Pilot" ColumnName="Name_Pilot" />
+                <ScalarProperty Name="type_order" ColumnName="type_order" />
+                <ScalarProperty Name="CUSTOMER_ID" ColumnName="CUSTOMER_ID" />
+                <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
+                <ScalarProperty Name="Confirmation" ColumnName="Confirmation" />
+                <ScalarProperty Name="Tax" ColumnName="Tax" />
+                <ScalarProperty Name="EMPLOYEE_ID" ColumnName="EMPLOYEE_ID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="EMPLOYEE_NAME" ColumnName="EMPLOYEE_NAME" />
+                <ScalarProperty Name="Total_All" ColumnName="Total_All" />
+                <ScalarProperty Name="CUSTOMER_ADDRES_2" ColumnName="CUSTOMER_ADDRES_2" />
+                <ScalarProperty Name="PHONE" ColumnName="PHONE" />
+                <ScalarProperty Name="CUSTOMER_ADDRES" ColumnName="CUSTOMER_ADDRES" />
+                <ScalarProperty Name="CUSTOMER_NAME" ColumnName="CUSTOMER_NAME" />
+                <ScalarProperty Name="Date_Order_Delivery" ColumnName="Date_Order_Delivery" />
+                <ScalarProperty Name="ID_ORDER_Delivery" ColumnName="ID_ORDER_Delivery" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

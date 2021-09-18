@@ -56,6 +56,9 @@ namespace Items {
     var ID_CAT;
     var ID_CAT_Old =0; 
     var PRODUCT_ID = 0;
+    var TrType = 0;
+
+    
 
     export function InitalizeComponent() {
         debugger
@@ -85,9 +88,16 @@ namespace Items {
 
         $('#btnsave').toggleClass("display_none");
         $('#btnback').toggleClass("display_none");
+
+        $('#btnAddOldItem').addClass("display_none");
+
+        
         $("#div_ContentData :input").removeAttr("disabled");
         $("#btnedite").toggleClass("display_none");
         $(".SelectDIS").attr("disabled", "disabled");
+
+
+        
 
         if ($('#drpitem_family :selected').text() == "النوع") {
             $("#drpitem_family").attr("disabled", "disabled")
@@ -108,6 +118,8 @@ namespace Items {
 
         $("#drbfamilly_cat").attr("disabled", "disabled");
 
+
+        $(".lType").attr("disabled", "disabled");
 
 
     });
@@ -216,14 +228,14 @@ namespace Items {
 
             '<div class=" "><input id="txtID' + cnt + '" type="text" class="form-control right2 display_none" disabled=""></div>' +
             '<div class="col-lg-1"><input id="txtCode' + cnt + '" type="text" class="form-control right2 SelectDIS" disabled=""></div>' +
-            '<div class="col-lg-2"><input id="txtDescA' + cnt + '" type="text" class="form-control right2" disabled=""></div> ' +
             '<div class="col-lg-2"><select id="select_Type_Item' + cnt + '" class="form-control" disabled=""></select></div> ' +
-            '<div class="col-lg-1"><input id="txtOnhandQty' + cnt + '" type="number" disabled="" class="form-control right2 "></div> ' +
-            '<div class="col-lg-1"><input id="txtPurchasing_price' + cnt + '" type="number" disabled="" class="form-control right2"></div> ' +
+            '<div class="col-lg-2"><input id="txtDescA' + cnt + '" type="text" class="form-control right2" disabled=""></div> ' +
             '<div class="col-lg-1"><select id="dllType' + cnt + '" class="form-control" disabled="">  <option value="0">سلعة</option> <option value="1">خدمة</option></select></div> ' +
+            '<div class="col-lg-1"><input id="txtOnhandQty' + cnt + '" type="number" disabled="" class="form-control right2 "></div> ' +
+            '<div class="col-lg-1"><input id="txtPurchasing_price' + cnt + '" type="number" disabled="" class="form-control right2 "></div> ' +
             '<div class="col-lg-1"><input id="txtUnitPrice' + cnt + '" type="number" disabled="" class="form-control right2"></div> ' +
             '<div class="col-lg-1"><input id="txtMinUnitPrice' + cnt + '" type="number" disabled="" class="form-control right2"></div> ' +
-            '<div class="col-lg-2"><input id="Serial' + cnt + '" type="number" disabled="" class="form-control right2"></div> ' +
+            '<div class="col-lg-2"><input id="Serial' + cnt + '" type="number" disabled="" class="form-control right2 "></div> ' +
 
             '</div>' +
             '</div> ' +
@@ -255,6 +267,30 @@ namespace Items {
         $("#dllType" + cnt).on('change', function () {
             if ($("#txt_StatusFlag" + cnt).val() != "i")
                 $("#txt_StatusFlag" + cnt).val("u");
+
+
+            if ($("#dllType" + cnt).val() == '1') {
+
+                $('#txtOnhandQty' + cnt).val('1');
+                $('#txtPurchasing_price' + cnt).val('0');
+                $('#Serial' + cnt).val('');
+
+                $('#txtOnhandQty' + cnt).attr("disabled", "disabled");
+                $('#txtPurchasing_price' + cnt).attr("disabled", "disabled");
+                $('#Serial' + cnt).attr("disabled", "disabled");
+
+            }
+            else {
+
+                $('#txtOnhandQty' + cnt).removeAttr("disabled");
+                $('#txtPurchasing_price' + cnt).removeAttr("disabled");
+                $('#Serial' + cnt).removeAttr("disabled");
+                 
+            }
+
+           
+
+
         });
         $("#select_Type_Item" + cnt).on('change', function () {
 
@@ -574,6 +610,8 @@ namespace Items {
                     $('#txt_PRODUCT_Purchasing_price').val(DetailsBar[0].PRODUCT_Purchasing_price);
                     PRODUCT_ID = DetailsBar[0].PRODUCT_ID;
                     ID_CAT_Old = DetailsBar[0].ID_CAT;
+                    TrType = DetailsBar[0].TrType;
+
                 }
                 refresh();
             }
@@ -632,6 +670,8 @@ namespace Items {
         Model.PRODUCT_NAME = txt_ItemName.value;
         Model.PRODUCT_ID = PRODUCT_ID;
         Model.ID_CAT = ID_CAT_Old; 
+        Model.TrType = TrType; 
+         
 
          
         Ajax.Callsync({
@@ -687,6 +727,17 @@ namespace Items {
             $("#txtMinUnitPrice" + i).val(Details[i].MinUnitPrice);
             $("#Serial" + i).val(Details[i].serial);
             $('#select_Type_Item' + i).prop("value", Details[i].ID_CAT);
+
+          
+            if (Details[i].TrType == 1) {
+
+                $("#txtOnhandQty" + i).addClass("lType");
+                $("#txtPurchasing_price" + i).addClass("lType");
+                $("#Serial" + i).addClass("lType");
+                 
+
+            }
+
 
             $("#txt_StatusFlag" + i).val("");
 
@@ -753,6 +804,18 @@ namespace Items {
             $("#txtMinUnitPrice" + i).val(Details[i].MinUnitPrice);
             $("#Serial" + i).val(Details[i].serial);
             $('#select_Type_Item' + i).prop("value", Details[i].ID_CAT);
+
+      
+
+            if (Details[i].TrType == 1) {
+
+                $("#txtOnhandQty" + i).addClass("lType");
+                $("#txtPurchasing_price" + i).addClass("lType");
+                $("#Serial" + i).addClass("lType");
+                 
+
+            }
+
 
             $("#txt_StatusFlag" + i).val("");
 
@@ -859,6 +922,9 @@ namespace Items {
         $("#drp_StocK").removeAttr("disabled");
         $("#drbfamilly_cat").removeAttr("disabled");
 
+        $('#btnAddOldItem').removeClass("display_none");
+
+
     }
 
     function Validation_Grid(rowcount: number) {
@@ -869,18 +935,18 @@ namespace Items {
         }
         else {
 
-            if (
-                ($("#txtDescA" + rowcount).val() == "") && $("#txt_StatusFlag" + rowcount).val() != "d") {
-                MessageBox.Show("  برجاء ادخل الوصف العربي ", "خطأ");
-                Errorinput($("#txtDescA" + rowcount));
-                return false;
-            }
             if (($("#select_Type_Item" + rowcount).val() == "10101") && $("#txt_StatusFlag" + rowcount).val() != "d") {
                 MessageBox.Show("برجاء اختار الفئة  ", "خطأ");
                 Errorinput($("#select_Type_Item" + rowcount));
 
                 return false;
             }
+            if (
+                ($("#txtDescA" + rowcount).val() == "") && $("#txt_StatusFlag" + rowcount).val() != "d") {
+                MessageBox.Show("  برجاء ادخل الوصف العربي ", "خطأ");
+                Errorinput($("#txtDescA" + rowcount));
+                return false;
+            } 
             if ($("#txtOnhandQty" + rowcount).val() == "") {
                 MessageBox.Show("برجاء ادخل الكميه المتاحه", "خطأ");
                 Errorinput($("#txtOnhandQty" + rowcount));

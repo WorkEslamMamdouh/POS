@@ -80,6 +80,7 @@ namespace SlsTrSalesReturn {
     var CountGrid = -1;
     var CountItems = 0;
     var Bal = 0;
+    var ID_ORDER_Delivery = 0; 
 
     export function InitalizeComponent() {
 
@@ -289,6 +290,12 @@ namespace SlsTrSalesReturn {
                     for (var i = 0; i < Get_IQ_ReviewSalesMaster.length; i++) {
                         Get_IQ_ReviewSalesMaster[i].Date = DateFormat(Get_IQ_ReviewSalesMaster[i].Date);
 
+
+                       
+                      
+                        Get_IQ_ReviewSalesMaster[i].Date = DateFormat(Get_IQ_ReviewSalesMaster[i].Date);
+
+
                     }
                     InitializeGrid();
                     divMasterGrid.DataSource = Get_IQ_ReviewSalesMaster;
@@ -329,7 +336,7 @@ namespace SlsTrSalesReturn {
         divMasterGrid.PrimaryKey = "ID_ORDER_Delivery";
         divMasterGrid.Columns = [
             { title: "ID", name: "ID_ORDER_Delivery", type: "text", width: "2%", visible: false },
-            { title: "رقم الفاتوره", name: "ID_ORDER_Delivery", type: "text", width: "10%" },
+            { title: "رقم الفاتوره", name: "Namber_Order_Delivery", type: "text", width: "10%" },
             { title: " التاريخ  ", name: "Date", type: "text", width: "12%" },
             { title: "البائع", name: "EMPLOYEE_NAME", type: "text", width: "20%" },
             { title: "العميل", name: "CUSTOMER_NAME", type: "text", width: "20%" },
@@ -347,6 +354,8 @@ namespace SlsTrSalesReturn {
         $("#rowData").removeClass("display_none");
         $("#divTotalSatistics").removeClass("display_none");
         DisplayData(Selected_Data);
+
+        ID_ORDER_Delivery = Selected_Data[0].ID_ORDER_Delivery; 
 
 
     }
@@ -1135,7 +1144,7 @@ namespace SlsTrSalesReturn {
 
 
         SlsMasterDetils.I_Sls_TR_Invoice.Total_All = $('#txtTotal').val();
-        SlsMasterDetils.I_Sls_TR_Invoice.ID_ORDER_Delivery = $('#txtNumber').val();
+        SlsMasterDetils.I_Sls_TR_Invoice.ID_ORDER_Delivery = ID_ORDER_Delivery;
       
 
     }
@@ -1303,7 +1312,7 @@ namespace SlsTrSalesReturn {
         let _Stock: Settings_Report = new Settings_Report();
         _Stock.Type_Print = type;
         _Stock.ID_Button_Print = 'saless_ret';
-        _Stock.Parameter_1 = $('#txtNumber').val();
+        _Stock.Parameter_1 = ID_ORDER_Delivery.toString();
         //_Stock.Parameter_2 = "";
         //_Stock.Parameter_3 = "";
         //_Stock.Parameter_4 = "";

@@ -23,6 +23,13 @@ namespace API.Controllers
     {
 
 
+        public class SlsInvoiceTrNo_Or_ID
+        {
+            public int TrNo { get; set; }
+            public int ID_ORDER { get; set; }
+        }
+
+
         private readonly ISlsTrSalesServices SlsTrSalesServices;
 
         public SlsTrSalesController(ISlsTrSalesServices _SlsTrSalesServices)
@@ -46,10 +53,11 @@ namespace API.Controllers
         [HttpPost, AllowAnonymous]
         public IHttpActionResult InsertInvoiceMasterDetail([FromBody]SlsInvoiceMasterDetails obj)
         {
-            if (ModelState.IsValid)
-            {
+            
                 try
-                { 
+                {
+                    SlsInvoiceTrNo_Or_ID TrNo_Or_ID = new SlsInvoiceTrNo_Or_ID();
+
                     string UserName = obj.I_Sls_TR_Invoice.UserName;
                     int Namber_Order_Delivery = obj.I_Sls_TR_Invoice.Namber_Order_Delivery;
                     decimal Total_All = obj.I_Sls_TR_Invoice.Total_All;
@@ -69,16 +77,28 @@ namespace API.Controllers
                         int PRODUCT_ID =Convert.ToInt16(obj.I_Sls_TR_InvoiceItems[i].PRODUCT_ID);
                         int Quantity =Convert.ToInt16(obj.I_Sls_TR_InvoiceItems[i].Quantity_sell);
 
-                        string update = "update PRODUCT set PRODUCT_QET=(PRODUCT_QET - "+ Quantity + ") where PRODUCT_ID='" + PRODUCT_ID + "'";
-
                         var InvoiceItems = SlsTrSalesServices.Insert(obj.I_Sls_TR_InvoiceItems[i]);
 
-                        var update_Qy = db.Database.ExecuteSqlCommand(update);
+                      string  qq = "select TrType from PRODUCT where PRODUCT_ID = "+ PRODUCT_ID + "";
+                        int TrType = db.Database.SqlQuery<int>(qq).FirstOrDefault();
+
+                        if (TrType != 1)
+                        {
+                            string update = "update PRODUCT set PRODUCT_QET=(PRODUCT_QET - " + Quantity + ") where PRODUCT_ID='" + PRODUCT_ID + "'";
+                            var update_Qy = db.Database.ExecuteSqlCommand(update);
+                        }
+                        
 
                     }
 
+                    string GetTrNo = "select [Namber_Order_Delivery] from [ORDER_DELIVERY] where [ID_ORDER_Delivery] = " + Num_Order + "";
+                    int TrNo = db.Database.SqlQuery<int>(GetTrNo).FirstOrDefault();
 
-                    return Ok(new BaseResponse(Num_Order));
+                    TrNo_Or_ID.TrNo = TrNo;
+                    TrNo_Or_ID.ID_ORDER = Num_Order;
+
+
+                    return Ok(new BaseResponse(TrNo_Or_ID));
                     ////////
                 }
                 catch (Exception ex)
@@ -86,8 +106,7 @@ namespace API.Controllers
                     return Ok(new BaseResponse(HttpStatusCode.ExpectationFailed, ex.Message));
                 }
 
-            }
-            return BadRequest(ModelState);
+          
         }
 
        

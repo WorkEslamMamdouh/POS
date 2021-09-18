@@ -473,7 +473,15 @@ class LoginPage extends SecurityClass {
     public Open_Login: boolean;
 }
 
-  
+class SlsInvoiceTrNo_Or_ID {
+    constructor() {
+        this.TrNo = 0;
+        this.ID_ORDER = 0;
+    }
+    public TrNo: number;
+    public ID_ORDER: number;
+}
+
 class PRODUCT   {
     constructor() { 
         this.PRODUCT_ID = 0;
@@ -535,7 +543,7 @@ class ReviewSalesMaster extends SecurityClass {
         this.CUSTOMER_ADDRES = "";
         this.PHONE = "";
         this.CUSTOMER_ADDRES_2 = "";
-        this.Total_All = 0;
+        this.Total_All
         this.EMPLOYEE_NAME = "";
         this.Date = "";
         this.EMPLOYEE_ID = 0;
@@ -543,6 +551,9 @@ class ReviewSalesMaster extends SecurityClass {
         this.Confirmation = false;
         this.USER_CODE = "";
         this.CUSTOMER_ID = 0;
+        this.type_order = "";
+        this.Name_Pilot = "";
+        this.Namber_Order_Delivery = 0;
     }
     public ID_ORDER_Delivery: number;
     public Date_Order_Delivery: string;
@@ -550,7 +561,7 @@ class ReviewSalesMaster extends SecurityClass {
     public CUSTOMER_ADDRES: string;
     public PHONE: string;
     public CUSTOMER_ADDRES_2: string;
-    public Total_All: number;
+    public Total_All: any;
     public EMPLOYEE_NAME: string;
     public Date: string;
     public EMPLOYEE_ID: number;
@@ -558,7 +569,11 @@ class ReviewSalesMaster extends SecurityClass {
     public Confirmation: boolean;
     public USER_CODE: string;
     public CUSTOMER_ID: number;
+    public type_order: string;
+    public Name_Pilot: string;
+    public Namber_Order_Delivery: number;
 }
+
 
 
 

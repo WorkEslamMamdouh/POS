@@ -328,6 +328,13 @@ var LoginPage = (function (_super) {
     }
     return LoginPage;
 }(SecurityClass));
+var SlsInvoiceTrNo_Or_ID = (function () {
+    function SlsInvoiceTrNo_Or_ID() {
+        this.TrNo = 0;
+        this.ID_ORDER = 0;
+    }
+    return SlsInvoiceTrNo_Or_ID;
+}());
 var PRODUCT = (function () {
     function PRODUCT() {
         this.PRODUCT_ID = 0;
@@ -371,7 +378,7 @@ var ReviewSalesMaster = (function (_super) {
         _this.CUSTOMER_ADDRES = "";
         _this.PHONE = "";
         _this.CUSTOMER_ADDRES_2 = "";
-        _this.Total_All = 0;
+        _this.Total_All;
         _this.EMPLOYEE_NAME = "";
         _this.Date = "";
         _this.EMPLOYEE_ID = 0;
@@ -379,6 +386,9 @@ var ReviewSalesMaster = (function (_super) {
         _this.Confirmation = false;
         _this.USER_CODE = "";
         _this.CUSTOMER_ID = 0;
+        _this.type_order = "";
+        _this.Name_Pilot = "";
+        _this.Namber_Order_Delivery = 0;
         return _this;
     }
     return ReviewSalesMaster;

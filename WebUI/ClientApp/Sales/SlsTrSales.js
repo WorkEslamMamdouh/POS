@@ -105,6 +105,7 @@ var SlsTrSales;
     var id_Category;
     var type_Save_Print = false;
     var res;
+    var TrType;
     function InitalizeComponent() {
         debugger;
         $('#cont').toggleClass('colapsdivcont');
@@ -115,6 +116,7 @@ var SlsTrSales;
         Display_familly_Cate();
         Display_Category();
         Display_But();
+        select_But_Frist();
         GetAllCustomer();
         var Ul_Div = document.createElement('ul');
         Ul_Div.setAttribute('id', 'Ul_Div');
@@ -217,6 +219,7 @@ var SlsTrSales;
             Name_Product = itembar[0].PRODUCT_NAME;
             OnhandQty = itembar[0].PRODUCT_QET;
             MinUnitPrice = itembar[0].MinUnitPrice;
+            TrType = itembar[0].TrType;
             ItemID = itembar[0].PRODUCT_ID;
             price_One_Product = parseFloat($("#txtPrice").val());
             price_Product = parseFloat($("#txtPrice").val());
@@ -232,7 +235,7 @@ var SlsTrSales;
                     }
                 }
             }
-            if (OnhandQty <= 0) {
+            if (OnhandQty <= 0 && TrType == 0) {
                 alert('Finish');
             }
             else {
@@ -266,15 +269,46 @@ var SlsTrSales;
         });
     }
     function Create_familly_Cate() {
-        var button_Category = document.createElement('button');
-        button_Category.setAttribute('id', 'id_familly' + famillyPlus);
-        button_Category.setAttribute('type', 'button');
-        button_Category.setAttribute('data-famillyID', famillyID);
-        button_Category.setAttribute('class', 'btn btn-info Style_familly');
-        button_Category.setAttribute('value', familly_NAME);
-        document.getElementById("div_familly").appendChild(button_Category);
-        document.getElementById('id_familly' + famillyPlus + '').innerHTML = familly_NAME;
-        $('#id_familly' + famillyPlus + '').click(Selecte_familly_Cate);
+        if (familly_NAME == 'خدمات') {
+            var button_Category = document.createElement('button');
+            button_Category.setAttribute('id', 'id_familly' + famillyPlus);
+            button_Category.setAttribute('type', 'button');
+            button_Category.setAttribute('data-famillyID', famillyID);
+            button_Category.setAttribute('class', 'btn btn-info Style_servis ');
+            button_Category.setAttribute('value', familly_NAME);
+            document.getElementById("Div_Servise").appendChild(button_Category);
+            document.getElementById('id_familly' + famillyPlus + '').innerHTML = familly_NAME;
+            $('#id_familly' + famillyPlus + '').click(Selecte_familly_Cate);
+        }
+        else {
+            var button_Category = document.createElement('button');
+            button_Category.setAttribute('id', 'id_familly' + famillyPlus);
+            button_Category.setAttribute('type', 'button');
+            button_Category.setAttribute('data-famillyID', famillyID);
+            button_Category.setAttribute('class', 'btn btn-info Style_familly');
+            button_Category.setAttribute('value', familly_NAME);
+            document.getElementById("div_familly").appendChild(button_Category);
+            document.getElementById('id_familly' + famillyPlus + '').innerHTML = familly_NAME;
+            $('#id_familly' + famillyPlus + '').click(Selecte_familly_Cate);
+        }
+    }
+    function select_But_Frist() {
+        Category = new Array();
+        famillyID = $(this).attr('data-famillyID');
+        Category = CategoryDetails.filter(function (x) { return x.ID_familly_Cat == Number(CategoryDetails[0].ID_familly_Cat); });
+        document.getElementById("div_Category").innerHTML = "";
+        document.getElementById("uul").innerHTML = '';
+        for (var i = 0; i < Category.length; i++) {
+            Category_NAME = Category[i].Name_CAT;
+            CatID = Category[i].ID_CAT;
+            CatPlus = i;
+            Create_Category();
+            var Family = FamilyDetails.filter(function (x) { return x.ID_CAT == Number(Category[i].ID_CAT); });
+            DisplayItems(Family);
+        }
+        //document.getElementById("uul").innerHTML = '';
+        $(this).attr('style', 'background: #e58828;');
+        id_Family = $(this);
     }
     function Selecte_familly_Cate() {
         try {
@@ -296,7 +330,7 @@ var SlsTrSales;
             DisplayItems(Family);
         }
         //document.getElementById("uul").innerHTML = '';
-        $(this).attr('style', 'background: #e58828;');
+        $(this).attr('style', 'background: #e58828; !important');
         id_Family = $(this);
     }
     //--------------------------------------------------Display_Category--------------------------------
@@ -388,10 +422,10 @@ var SlsTrSales;
             if (ItemList[i].ID_CAT == 1283) {
                 class_input = "input_etisalat";
             }
-            else if (ItemList[i].ID_CAT == 1285) {
+            else if (ItemList[i].TrType == 1) {
                 class_input = "input_vodafone";
             }
-            else if (ItemList[i].ID_CAT == 1284) {
+            else if (ItemList[i].ID_CAT == 1) {
                 class_input = "input_orange";
             }
             else if (ItemList[i].ID_CAT == 1286) {
@@ -407,6 +441,7 @@ var SlsTrSales;
             MinUnitPrice = ItemList[i].MinUnitPrice;
             ItemID = ItemList[i].PRODUCT_ID;
             IDPlus = ItemID;
+            TrType = ItemList[i].TrType;
             AddBut();
         }
     }
@@ -449,6 +484,7 @@ var SlsTrSales;
             div.setAttribute('title', 'الكمية (' + Qty.toString() + ')');
             div.setAttribute('data-pirce', PRICE.toString());
             div.setAttribute('data-MinUnitPrice', MinUnitPrice);
+            div.setAttribute('data-TrType', TrType);
             div.setAttribute('style', 'zoom:2.4;font-size: 8px;font-weight: bold;');
             div.setAttribute('class', 'Css_but chat-box-wrap shadow-reset ' + class_input + '');
             document.getElementById("li_input" + IDPlus + "").appendChild(div);
@@ -459,7 +495,7 @@ var SlsTrSales;
         $('#input' + IDPlus).mouseleave(mouseleave_but);
     }
     function mousemove_but() {
-        if (this.getAttribute('data-Qty') > 0) {
+        if (this.getAttribute('data-Qty') > 0 || this.getAttribute('data-TrType') == 1) {
             //this.setAttribute('style', 'background-color: #00ffe23d; zoom:' + zoom_select + ';');
             //this.setAttribute('class', 'Css_but chat-box-wrap shadow-reset  animated pulse');
             this.setAttribute('value', '( ' + this.getAttribute('data-pirce') + ' )' + 'ج');
@@ -480,21 +516,29 @@ var SlsTrSales;
         Name_Product = $(this).attr('data-Name');
         OnhandQty = $(this).attr('data-Qty');
         MinUnitPrice = $(this).attr('data-MinUnitPrice');
+        TrType = $(this).attr('data-TrType');
         for (var i = 0; i < Num_Add_List + 1; i++) {
             var prgraph = document.getElementById("ppp" + i);
             if (prgraph != null) {
                 var Name_Item = prgraph.getAttribute("data_name_p");
                 var Qty_2 = Number(prgraph.getAttribute("data_qet_p"));
                 if (Name_Item == Name_Product) {
-                    OnhandQty = OnhandQty - Qty_2;
+                    if (TrType == 0) {
+                        OnhandQty = OnhandQty - Qty_2;
+                    }
                 }
             }
         }
-        if (OnhandQty <= 0) {
+        if (OnhandQty <= 0 && TrType == 0) {
             $(this).val('Finish');
         }
         else {
-            $('#id_Labol').html('متاح (' + OnhandQty + ') من  ' + Name_Product + '');
+            if (TrType == '1') {
+                $('#id_Labol').html('' + Name_Product + '');
+            }
+            else {
+                $('#id_Labol').html('متاح (' + OnhandQty + ') من  ' + Name_Product + '');
+            }
             $('#Men_popu').attr('style', 'display:block;');
             $('#Men_popu').attr('class', 'popu animated zoomIn');
             $('#txtQuantity').val('1');
@@ -522,7 +566,7 @@ var SlsTrSales;
                 }
             }
             else if (type == 'plus') {
-                if (currentVal < Number(OnhandQty)) {
+                if (currentVal < Number(OnhandQty) || TrType == 1) {
                     if (currentVal < Number(input.attr('max'))) {
                         input.val((currentVal + 1)).change();
                     }
@@ -572,7 +616,7 @@ var SlsTrSales;
         $('#Men_popu').attr('class', 'popu animated zoomOutUp');
     }
     function Total() {
-        if (Number($("#txtQuantity").val()) <= OnhandQty) {
+        if (Number($("#txtQuantity").val()) <= OnhandQty || TrType == 1) {
             var total = Number($("#txtPrice").val()) * Number($("#txtQuantity").val());
             $("#txtTotal_Popu").val(total);
         }
@@ -603,7 +647,7 @@ var SlsTrSales;
         var New_price = price_Product;
         paragraph.setAttribute('data_QET_P', New_QET.toString());
         paragraph.setAttribute('data_total_price', New_price.toString());
-        paragraph.innerHTML = '( ' + New_QET + ' )   ' + Name_Product + '  = ' + New_price + ' <a id="oioo' + Num_paragraph + '"  data-ID-Paragraph="' + Num_paragraph + '" href="#"  data-exit_id="exit' + Num_paragraph + '"  data-ip_div="comnt' + Num_paragraph + '" data-MinUnitPrice="' + MinUnitPrice + '" data-OnhandQty="' + OnhandQty + '" data-Name="' + Name_Product + '" data-price_One="' + price_One_Product + '"  data-Qet_Product="' + New_QET + '" class="chat-box-wrap shadow-reset animated zoomInLeft fa big-icon fa-edit"         style="font-size: 13px;padding: 4px;border-radius: 20px;color: #fdff61;margin: 0px 10px 0px 0px;"           ></a> ';
+        paragraph.innerHTML = '( ' + New_QET + ' )   ' + Name_Product + '  = ' + New_price + ' <a id="oioo' + Num_paragraph + '"  data-ID-Paragraph="' + Num_paragraph + '" href="#"  data-exit_id="exit' + Num_paragraph + '"  data-ip_div="comnt' + Num_paragraph + '" data-TrType="' + TrType + '" data-MinUnitPrice="' + MinUnitPrice + '" data-OnhandQty="' + OnhandQty + '" data-Name="' + Name_Product + '" data-price_One="' + price_One_Product + '"  data-Qet_Product="' + New_QET + '" class="chat-box-wrap shadow-reset animated zoomInLeft fa big-icon fa-edit"         style="font-size: 13px;padding: 4px;border-radius: 20px;color: #fdff61;margin: 0px 10px 0px 0px;"           ></a> ';
         $('#Ul_Div li a').click(click_Remove_Item_in_Basket);
         $('#Men_popu').attr('class', 'popu animated zoomOutRight');
         $("#PopupDialog").modal("hide");
@@ -631,7 +675,7 @@ var SlsTrSales;
                         var New_price = Number(price_Product) + parseFloat(price_P);
                         paragraph.setAttribute('data_QET_P', New_QET.toString());
                         paragraph.setAttribute('data_total_price', New_price.toString());
-                        paragraph.innerHTML = '( ' + New_QET + ' )   ' + Name_Product + '  = ' + New_price + ' <a id="oioo' + New_P + '" href="#" data-ID-Paragraph="' + New_P + '"  data-exit_id="exit' + New_P + '"  data-ip_div="comnt' + New_P + '" data-MinUnitPrice="' + MinUnitPrice + '" data-OnhandQty="' + OnhandQty + '" data-Name="' + Name_Product + '" data-price_One="' + price_One_Product + '"  data-Qet_Product="' + New_QET + '" class="chat-box-wrap shadow-reset animated zoomInLeft fa big-icon fa-edit"         style="font-size: 13px;padding: 4px;border-radius: 20px;color: #fdff61;margin: 0px 10px 0px 0px;"           ></a> ';
+                        paragraph.innerHTML = '( ' + New_QET + ' )   ' + Name_Product + '  = ' + New_price + ' <a id="oioo' + New_P + '" href="#" data-ID-Paragraph="' + New_P + '"  data-exit_id="exit' + New_P + '"  data-ip_div="comnt' + New_P + '"   data-TrType="' + TrType + '" data-MinUnitPrice="' + MinUnitPrice + '" data-OnhandQty="' + OnhandQty + '" data-Name="' + Name_Product + '" data-price_One="' + price_One_Product + '"  data-Qet_Product="' + New_QET + '" class="chat-box-wrap shadow-reset animated zoomInLeft fa big-icon fa-edit"         style="font-size: 13px;padding: 4px;border-radius: 20px;color: #fdff61;margin: 0px 10px 0px 0px;"           ></a> ';
                         $('#Ul_Div li a').click(click_Remove_Item_in_Basket);
                         tttt = 2;
                         break;
@@ -677,6 +721,7 @@ var SlsTrSales;
             ppp.setAttribute('data_total_price', price_Product.toString());
             ppp.setAttribute('data-New_P', P.toString());
             ppp.setAttribute('data-MinUnitPrice', MinUnitPrice);
+            ppp.setAttribute('data-TrType', TrType);
             document.getElementById("div" + P).appendChild(ppp);
             var divvv = document.createElement('input');
             divvv.setAttribute('type', 'text');
@@ -702,7 +747,7 @@ var SlsTrSales;
             li2_a.setAttribute('data-x_totel', $(this).attr('data-price'));
             li2_a.setAttribute('data-id_ppp', 'ppp' + P);
             document.getElementById("li1_Div" + P).appendChild(li2_a);
-            document.getElementById('ppp' + P).innerHTML = '' + '( ' + Qet_Product + ' )   ' + Name_Product + '  = ' + price_Product + ' <a id="oioo' + P + '"  data-ID-Paragraph="' + P + '" href="#"  data-exit_id="exit' + P + '"  data-ip_div="comnt' + P + '"  data-MinUnitPrice="' + MinUnitPrice + '"  data-OnhandQty="' + OnhandQty + '"   data-Name="' + Name_Product + '" data-price_One="' + price_One_Product + '" data-Qet_Product="' + Qet_Product + '" class="chat-box-wrap shadow-reset animated zoomInLeft fa big-icon fa-edit"         style="font-size: 13px;padding: 4px;border-radius: 20px;color: #fdff61;margin: 0px 10px 0px 0px;"           ></a> ';
+            document.getElementById('ppp' + P).innerHTML = '' + '( ' + Qet_Product + ' )   ' + Name_Product + '  = ' + price_Product + ' <a id="oioo' + P + '"  data-ID-Paragraph="' + P + '" href="#"  data-exit_id="exit' + P + '"  data-ip_div="comnt' + P + '" data-TrType="' + TrType + '" data-MinUnitPrice="' + MinUnitPrice + '"  data-OnhandQty="' + OnhandQty + '"   data-Name="' + Name_Product + '" data-price_One="' + price_One_Product + '" data-Qet_Product="' + Qet_Product + '" class="chat-box-wrap shadow-reset animated zoomInLeft fa big-icon fa-edit"         style="font-size: 13px;padding: 4px;border-radius: 20px;color: #fdff61;margin: 0px 10px 0px 0px;"           ></a> ';
             var mCSB_3_container = document.getElementById("mCSB_3_container");
             //mCSB_3_container.setAttribute('style', 'position: relative; top: -' + scro + 'px; left: 0px;');
             CChat.setAttribute('style', 'display: block');
@@ -755,7 +800,7 @@ var SlsTrSales;
         if (Edit_Id == "chat-box-wrap shadow-reset animated zoomInLeft fa big-icon fa-edit") {
             //debugger
             Num_paragraph = $(this).attr('data-ID-Paragraph');
-            click_Edit($(this).attr('data-name'), Number($(this).attr('data-price_one')), Number($(this).attr('data-qet_product')), Number($(this).attr('data-onhandqty')), Number($(this).attr('data-minunitprice')));
+            click_Edit($(this).attr('data-name'), Number($(this).attr('data-price_one')), Number($(this).attr('data-qet_product')), Number($(this).attr('data-onhandqty')), Number($(this).attr('data-minunitprice')), Number($(this).attr('data-TrType')));
         }
         else {
             var id_Pragraph = document.getElementById($(this).attr('data_id_Pragraph'));
@@ -819,27 +864,37 @@ var SlsTrSales;
         chat.setAttribute('aria-expanded', 'false');
     }
     ////------------------------------------------------------Edit-----------------------------------
-    function click_Edit(New_Name, New_Pirce, new_Qet, New_OnhandQty, New_MinUnitPrice) {
-        //debugger
+    function click_Edit(New_Name, New_Pirce, new_Qet, New_OnhandQty, New_MinUnitPrice, New_TrType) {
+        debugger;
         btn_Add_Basket.setAttribute('style', 'display:none;');
         btn_Edit_Basket.setAttribute('style', 'display:block;');
         Name_Product = New_Name;
         OnhandQty = New_OnhandQty;
         MinUnitPrice = New_MinUnitPrice;
+        TrType = New_TrType;
         //OnhandQty = New_OnhandQty;
         for (var i = 0; i < Num_Add_List + 1; i++) {
+            debugger;
             var prgraph = document.getElementById("ppp" + i);
             if (prgraph != null) {
                 var Name_Item = prgraph.getAttribute("data_name_p");
                 var Qty_3 = Number(prgraph.getAttribute("data_qet_p"));
                 if (Name_Item == Name_Product) {
-                    New_OnhandQty -= Qty_3;
+                    debugger;
+                    if (TrType == 0) {
+                        New_OnhandQty = OnhandQty - Qty_3;
+                    }
                 }
             }
         }
         if (New_OnhandQty <= 0) {
             //$(this).val('Finish');
-            $('#id_Labol').html('متاح (' + New_OnhandQty + ') من  ' + New_Name + '');
+            if (TrType == '1') {
+                $('#id_Labol').html('' + New_Name + '');
+            }
+            else {
+                $('#id_Labol').html('متاح (' + New_OnhandQty + ') من  ' + New_Name + '');
+            }
             $('#Men_popu').attr('style', 'display:block;');
             $('#Men_popu').attr('class', 'popu animated zoomIn');
             $('#txtQuantity').val(new_Qet);
@@ -847,8 +902,12 @@ var SlsTrSales;
             $("#PopupDialog").modal("show");
         }
         else {
-            //$('#id_Labol').html('متاح (' + OnhandQty + ') من  ' + Name_Product + '');
-            $('#id_Labol').html('متاح (' + New_OnhandQty + ') من  ' + New_Name + '');
+            if (TrType == '1') {
+                $('#id_Labol').html('' + New_Name + '');
+            }
+            else {
+                $('#id_Labol').html('متاح (' + New_OnhandQty + ') من  ' + New_Name + '');
+            }
             $('#Men_popu').attr('style', 'display:block;');
             $('#Men_popu').attr('class', 'popu animated zoomIn');
             $('#txtQuantity').val(new_Qet);
@@ -866,7 +925,7 @@ var SlsTrSales;
         InvoiceModel.Total_All = Number($('#All_Total_Basket').attr('All_Total'));
         InvoiceModel.Date_Order_Delivery = timer();
         InvoiceModel.Tax = 0;
-        InvoiceModel.CUSTOMER_ID = Number(idCust.value) == null ? 24 : Number(idCust.value);
+        InvoiceModel.CUSTOMER_ID = Number(idCust.value) == null ? null : Number(idCust.value);
         InvoiceModel.type_order = 'Delivery';
         InvoiceModel.Confirmation = true;
         for (var i = 1; i < Num_Add_List + 1; i++) {
@@ -880,6 +939,8 @@ var SlsTrSales;
                 var Price_Item = Number(prgraph.getAttribute("data_price_p"));
                 var Total_Price_1 = Number(prgraph.getAttribute("data_total_price"));
                 var MinPrice = prgraph.getAttribute("data-minunitprice");
+                var TrTypee = prgraph.getAttribute("data-TrType");
+                TrType;
                 var get_Price_on_seller = document.getElementById("oioo" + prgraph.getAttribute("data-new_p"));
                 var Price_on_seller = get_Price_on_seller.getAttribute("data-price_one");
                 Model.ID_DELIVERY = 0;
@@ -889,6 +950,7 @@ var SlsTrSales;
                 Model.price_One_part = Number(Price_Item);
                 Model.Total_Price_One_Part = Number(Total_Price_1);
                 Model.Notes_Order = MinPrice;
+                //Model.TrType = TrTypee;
                 Model.FK_ORDER_Delivery = 0;
                 List.push(Model);
                 MasterDetailModel.I_Sls_TR_Invoice = InvoiceModel;
@@ -920,6 +982,7 @@ var SlsTrSales;
                     Remove_Item_in_Basket();
                     $('#uul').html('');
                     Display_But();
+                    select_But_Frist();
                 }
             }
             else {
@@ -950,6 +1013,7 @@ var SlsTrSales;
                     $('#uul').html('');
                     Display_But();
                     printreport();
+                    select_But_Frist();
                 }
             }
             else {
@@ -992,7 +1056,7 @@ var SlsTrSales;
     }
     function Insert_Basket() {
         if (InvoiceModel.CUSTOMER_ID == null || InvoiceModel.CUSTOMER_ID == 0) {
-            InvoiceModel.CUSTOMER_ID = 24;
+            InvoiceModel.CUSTOMER_ID = null;
         }
         Ajax.Callsync({
             type: "POST",
@@ -1002,7 +1066,7 @@ var SlsTrSales;
                 var result = d;
                 if (result.IsSuccess == true) {
                     res = result.Response;
-                    MessageBox.Show(" تم اصدار  فاتورة رقم  " + res + " ", "تم");
+                    MessageBox.Show(" تم اصدار  فاتورة رقم  " + res.TrNo + " ", "تم");
                     Success = true;
                     Hide_Basket();
                 }
@@ -1041,6 +1105,7 @@ var SlsTrSales;
                 FamilyDetails = new Array();
                 $('#uul').html('');
                 Display_But();
+                select_But_Frist();
                 $('#popu_Passowrd').attr('style', 'display:none;');
                 $('#popu_Passowrd').attr('class', 'popu animated zoomOut');
                 txt_ApprovePass.value = "";
@@ -1141,7 +1206,7 @@ var SlsTrSales;
             else {
                 Details_Updata_Cust = new Array();
                 Det_Single_Cust = new CUSTOMER();
-                Det_Single_Cust.CUSTOMER_ID = 24;
+                Det_Single_Cust.CUSTOMER_ID = null;
                 Det_Single_Cust.CUSTOMER_NAME = CUST_NAME.value;
                 Det_Single_Cust.PHONE = CUST_Phone.value;
                 Det_Single_Cust.CUSTOMER_ADDRES = CUST_ADDRES.value;
