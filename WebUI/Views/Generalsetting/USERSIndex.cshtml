@@ -45,7 +45,7 @@
     }
 
     .panel-body {
-        background-color: aliceblue;
+        background-color: #f6e30040;
     }
 
     .Div_Uesr {
@@ -117,7 +117,7 @@
 <div class="panel panel-default">
     @*<label id="lepReserved" class="col-lg-12 labeltitel "><span id="spanlepReserved" class="ifontowsam fa fa-caret-left"></span>     </label>*@
     <div class="panel-heading panel_me">
-        <i class="glyphicon glyphicon-pencil icon_panel"></i><label class="span_item">الاعدادات </label><label class="span_item"></label>
+        <i class="glyphicon glyphicon-pencil icon_panel"></i><label class="span_item">الموظفين </label><label class="span_item"></label>
     </div>
     <div class="panel-body">
 
@@ -179,12 +179,17 @@
 
                 <div class="col-lg-12 " style=" ">
 
-                    <div class="col-lg-8 col-xs-8">
-                    </div>
-                    <div class="col-lg-1">
+                    <label class="col-lg-1 col-xs-4      pading_2"> كود الموظف </label>
 
-
+                    <div class="col-lg-2 col-xs-8">
+                        <input id="txtID_Code" name="DepartmentName" disabled type="number" class="form-control input-sm text_Display">
                     </div>
+
+                    <div class="col-lg-3 col-xs-8">
+                    </div>
+                    <div class="col-lg-1 col-xs-8">
+                    </div>
+
                     <div class="col-lg-2">
 
                         <button type="button" class="btn btn-warning display_none" id="btnback">
@@ -196,15 +201,17 @@
                         </button>
 
                     </div>
-                    <div class="col-lg-1">
-
-
+                    <div class="col-lg-1 col-xs-8">
+                        <button type="button" class="btn btn-primary" id="btnedite">
+                            <span class="glyphicon glyphicon-edit"></span>تعديل
+                        </button>
+                    </div>
+                    <div class="col-lg-2">
                         <button type="button" class="btn btn-warning-bg display_none" id="btnDelet" style="background-color: #e70000;color: wheat;">
                             <span class="glyphicon glyphicon-remove"></span>حذف
                         </button>
-
-                        <button type="button" class="btn btn-primary" id="btnedite">
-                            <span class="glyphicon glyphicon-edit"></span>تعديل
+                        <button type="button" class="btn btn-warning" id="btnprint">
+                            تقرير    <span class="glyphicon glyphicon-print"></span>
                         </button>
                     </div>
                 </div>
@@ -216,9 +223,7 @@
                             <input id="txtUSER_NAME" name="USER_NAME" disabled type="text" class="form-control input-sm text_Display">
                         </div>
                         <label class="col-lg-1 col-xs-4      pading_2 textcentr_pading">القسم</label>
-                        <div class="col-lg-2 col-xs-8">
-                            <input id="txtDepartmentName" name="DepartmentName" disabled type="text" class="form-control input-sm text_Display">
-                        </div>
+                        
                         <label class="col-lg-1 col-xs-4   pading_2 textcentr_pading">فعال</label>
                         <div class="col-lg-1 col-xs-8 ckeck" style="left: 6.5%;margin-top: -6px;">
                             <input id="chk_IsActive" disabled type="checkbox" class="form-control text_Display" />
@@ -227,20 +232,55 @@
 
                     <div class="col-lg-12 ">
                         <label class="col-lg-1 col-xs-4      pading_2">الوظيفة</label>
-                        <div class="col-lg-2 col-xs-8">
-                            <input id="txtJobTitle" name="JobTitle" disabled type="text" class="form-control input-sm text_Display">
+                        <div class="col-lg-2 col-xs-8"> 
+                            <select id="txtJobTitle" disabled name="USER_TYPE" class="form-control">
+                                <option value="Null">اختر الوظيفة</option>
+                                <option value="1">مندوب</option>
+                                <option value="0">مستخدم</option> 
+                            </select>
+
                         </div>
                         <label class="col-lg-1 col-xs-4      pading_2 textcentr_pading">الموبيل</label>
                         <div class="col-lg-2 col-xs-8">
                             <input id="txtMobile" name="Mobile" disabled type="text" class="form-control input-sm text_Display">
                         </div>
+                        <label class="col-lg-1 col-xs-4      pading_2 textcentr_pading">المرتب</label>
+                        <div class="col-lg-1 col-xs-8">
+                            <input id="txtsalary" name="salary" disabled type="number" class="form-control input-sm text_Display">
+                        </div>
+
+                        <div class="col-lg-1 col-xs-8">
+
+                        </div>
+                        <label class="col-lg-1 col-xs-4      pading_2">عدد ايام الحضور</label>
+
+                        <div class="col-lg-1 col-xs-8">
+                            <input id="txtUSER_Attendance" name="Num_Attendance" disabled type="number" class="form-control input-sm text_Display">
+                        </div>
+
 
                     </div>
                     <div class="col-lg-12 ">
                         <label class="col-lg-1 col-xs-4      pading_2 LEPEL_padingright">العنوان</label>
-                        <div class="col-lg-5 col-xs-8">
+                        <div class="col-lg-3 col-xs-8">
                             <input id="txtAddress" name="Address" disabled type="text" class="form-control input-sm text_Display">
                         </div>
+                        <label class="col-lg-1 col-xs-4      pading_2 LEPEL_padingright">عدد ايام العمل</label>
+                        <div class="col-lg-1 ">
+                            <input id="txtday_num" name="day_num" disabled type="number" class="form-control input-sm text_Display">
+                        </div>
+                        <div class="col-lg-1"></div>
+                        <label class="col-lg-1 col-xs-4      pading_2 LEPEL_padingright">عدد ايام الاجازه</label>
+                        <div class="col-lg-1 ">
+                            <input id="txtDay_Off" name="Day_Off" disabled type="text" class="form-control input-sm text_Display">
+                        </div>
+                        <label class="col-lg-1 col-xs-4      pading_2 LEPEL_padingright">عدد ساعات العمل</label>
+                        <div class="col-lg-1 ">
+                            <input id="txthour_num" name="hour_num" disabled type="text" class="form-control input-sm text_Display">
+                        </div>
+
+
+
                     </div>
 
                     <div class="col-lg-7" style="width: 61%;">
@@ -250,7 +290,7 @@
 
 
                     <div class="col-lg-12">
-                       
+
                     </div>
 
 
@@ -268,8 +308,6 @@
 
                 <div class="col-lg-12">
                     <label class="col-lg-4 col-xs-3 pading_2 LEPEL_padingright2" style="margin-right: 159px;">المهمة</label>
-
-
                     <label class="col-lg-3 col-xs-4 pading_2 ">منح الصلاحية؟ </label>
 
                 </div>
@@ -292,14 +330,14 @@
                     <br />
                 </div>
                 <div class="col-lg-12 col-xs-8">
-                    <button id="btnGive_assignments" disabled  type="button" class=" btn btn-custon-four btn-success">  منح جميع الصلاحيات  <i class="glyphicon glyphicon-check"></i> </button>
+                    <button id="btnGive_assignments" disabled type="button" class=" btn btn-custon-four btn-success">  منح جميع الصلاحيات  <i class="glyphicon glyphicon-check"></i> </button>
 
                 </div>
                 <div class="col-lg-12 col-xs-8">
                     <br />
                 </div>
                 <div class="col-lg-12 col-xs-8">
-                    <button id="btnBlock_permissions" disabled  type="button" class="btn btn-custon-four btn-danger">  منع جميع الصلاحيات  <i class="glyphicon glyphicon-lock"></i> </button>
+                    <button id="btnBlock_permissions" disabled type="button" class="btn btn-custon-four btn-danger">  منع جميع الصلاحيات  <i class="glyphicon glyphicon-lock"></i> </button>
 
                 </div>
 
@@ -308,7 +346,7 @@
                 </div>
 
                 <div class="col-lg-12 col-xs-8">
-                    <button id="btnLoadRoles" type="button" disabled  class=" btn btn-custon-four btn-primary " style="width: 92%;"> تحميل جميع المهام  <i class="glyphicon glyphicon-download"></i> </button>
+                    <button id="btnLoadRoles" type="button" disabled class=" btn btn-custon-four btn-primary " style="width: 92%;"> تحميل جميع المهام  <i class="glyphicon glyphicon-download"></i> </button>
 
                 </div>
 
@@ -345,39 +383,39 @@
                 <div class="col-lg-12 ">
 
                 </div>
-                    <div class="col-lg-12 ">
+                <div class="col-lg-12 ">
 
-                        <label class="col-lg-3 col-xs-4      pading_2">تاريخ اول دخول </label>
-                        <div class="col-lg-8 col-xs-8">
-                            <input id="txtFirstLogin" name="FirstLogin" disabled type="text" class="form-control input-sm text_Display">
-                        </div>
+                    <label class="col-lg-3 col-xs-4      pading_2">تاريخ اول دخول </label>
+                    <div class="col-lg-8 col-xs-8">
+                        <input id="txtFirstLogin" name="FirstLogin" disabled type="text" class="form-control input-sm text_Display">
                     </div>
-                    <div class="col-lg-12 ">
-
-                        <label class="col-lg-3 col-xs-4      pading_2">تاريخ اخر دخول  </label>
-                        <div class="col-lg-8 col-xs-8">
-                            <input id="txtLastLogin" name="LastLogin" disabled type="text" class="form-control input-sm text_Display">
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-
-                <div class="col-lg-12 col-xs-12" style="right: 2%;" id="div_plassAddDetails">
-
-                    <span id="btnAddDetails" class="glyphicon glyphicon-plus-sign display_none" style="font-size: 36px;"></span>
-
                 </div>
                 <div class="col-lg-12 ">
 
+                    <label class="col-lg-3 col-xs-4      pading_2">تاريخ اخر دخول  </label>
+                    <div class="col-lg-8 col-xs-8">
+                        <input id="txtLastLogin" name="LastLogin" disabled type="text" class="form-control input-sm text_Display">
+                    </div>
+
                 </div>
 
 
+            </div>
 
+
+            <div class="col-lg-12 col-xs-12" style="right: 2%;" id="div_plassAddDetails">
+
+                <span id="btnAddDetails" class="glyphicon glyphicon-plus-sign display_none" style="font-size: 36px;"></span>
 
             </div>
+            <div class="col-lg-12 ">
+
+            </div>
+
+
+
+
+        </div>
 
 
     </div>

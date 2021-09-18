@@ -42,7 +42,6 @@ namespace DAL.Domain
         public virtual DbSet<G_SearchFormSetting> G_SearchFormSetting { get; set; }
         public virtual DbSet<G_SUB_SYSTEMS> G_SUB_SYSTEMS { get; set; }
         public virtual DbSet<G_SYSTEM> G_SYSTEM { get; set; }
-        public virtual DbSet<G_USERS> G_USERS { get; set; }
         public virtual DbSet<ITEME> ITEMEs { get; set; }
         public virtual DbSet<LoginPage> LoginPages { get; set; }
         public virtual DbSet<Message_Chat> Message_Chat { get; set; }
@@ -72,6 +71,7 @@ namespace DAL.Domain
         public virtual DbSet<ReviewSalesItemInfo> ReviewSalesItemInfoes { get; set; }
         public virtual DbSet<PRODUCT> PRODUCTs { get; set; }
         public virtual DbSet<ReviewSalesMaster> ReviewSalesMasters { get; set; }
+        public virtual DbSet<G_USERS> G_USERS { get; set; }
     
         public virtual ObjectResult<insert_Table_Result> insert_Table(string name, string phone, string type, string message, string tR_Type)
         {
@@ -228,23 +228,6 @@ namespace DAL.Domain
                 new ObjectParameter("passwrd_emp", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addemp", emp_namParameter, emp_phoneParameter, usar_name_empParameter, passwrd_empParameter);
-        }
-    
-        public virtual ObjectResult<all_The_Gard_Result> all_The_Gard(string userName, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
-        {
-            var userNameParameter = userName != null ?
-                new ObjectParameter("UserName", userName) :
-                new ObjectParameter("UserName", typeof(string));
-    
-            var fromDateParameter = fromDate.HasValue ?
-                new ObjectParameter("FromDate", fromDate) :
-                new ObjectParameter("FromDate", typeof(System.DateTime));
-    
-            var toDateParameter = toDate.HasValue ?
-                new ObjectParameter("ToDate", toDate) :
-                new ObjectParameter("ToDate", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<all_The_Gard_Result>("all_The_Gard", userNameParameter, fromDateParameter, toDateParameter);
         }
     
         public virtual ObjectResult<Nullable<System.DateTime>> Date_Time_Now()
@@ -1230,6 +1213,23 @@ namespace DAL.Domain
         public virtual int New_Data_Bes()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("New_Data_Bes");
+        }
+    
+        public virtual ObjectResult<all_The_Gard_Result> all_The_Gard(string userName, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
+        {
+            var userNameParameter = userName != null ?
+                new ObjectParameter("UserName", userName) :
+                new ObjectParameter("UserName", typeof(string));
+    
+            var fromDateParameter = fromDate.HasValue ?
+                new ObjectParameter("FromDate", fromDate) :
+                new ObjectParameter("FromDate", typeof(System.DateTime));
+    
+            var toDateParameter = toDate.HasValue ?
+                new ObjectParameter("ToDate", toDate) :
+                new ObjectParameter("ToDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<all_The_Gard_Result>("all_The_Gard", userNameParameter, fromDateParameter, toDateParameter);
         }
     }
 }

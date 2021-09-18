@@ -26,5 +26,7 @@ namespace DAL.Domain
         public Nullable<double> Task { get; set; }
         public string Day_Date { get; set; }
         public string Shift_User { get; set; }
+        public Nullable<int> TrType { get; set; }
+        public Nullable<decimal> PRODUCT_PRICE { get; set; }
     }
 }

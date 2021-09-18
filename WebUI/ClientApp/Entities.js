@@ -883,6 +883,14 @@ var G_USERS = (function (_super) {
         _this.UpdatedBy = "";
         _this.CashBoxID = 0;
         _this.SalesManID = 0;
+        _this.salary = 0;
+        _this.day_num = 0;
+        _this.hour_num = 0;
+        _this.Num_Attendance = 0;
+        _this.ID_Code = 0;
+        _this.End_Data = "";
+        _this.Start_Data = "";
+        _this.Day_Off = 0;
         return _this;
     }
     return G_USERS;

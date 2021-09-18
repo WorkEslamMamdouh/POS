@@ -21,6 +21,7 @@ namespace SlsTrSales {
     var List: Array<Stok_ORDER_DELIVERY> = new Array<Stok_ORDER_DELIVERY>();
     var List_MinUnitPrice: Array<Stok_ORDER_DELIVERY> = new Array<Stok_ORDER_DELIVERY>();
     var Model: Stok_ORDER_DELIVERY = new Stok_ORDER_DELIVERY();
+    var UserDetails: Array<G_USERS> = new Array<G_USERS>();
 
     var div_menu = document.getElementById('thing');
     var theThing = document.querySelector("#thing");
@@ -100,6 +101,7 @@ namespace SlsTrSales {
     var cust_search_phone: HTMLInputElement;
     var idCust: HTMLInputElement;
     var txt_search: HTMLInputElement;
+    var ddlUserMaster: HTMLSelectElement;
     var fouse;
     var Num_Order;
     var Success;
@@ -127,6 +129,7 @@ namespace SlsTrSales {
         Ul_Div.setAttribute('id', 'Ul_Div');
         document.getElementById("mCSB_3_container").appendChild(Ul_Div);
         txt_search.focus();
+        FillddlUserMaster();
     }
     function InitalizeControls() {
         if (SysSession.CurrentEnvironment.ScreenLanguage = "ar") {
@@ -167,6 +170,8 @@ namespace SlsTrSales {
         txtTotAfterTax_Popu = document.getElementById('txtTotAfterTax_Popu') as HTMLInputElement;
         txt_ApprovePass = document.getElementById('txt_ApprovePass') as HTMLInputElement;
         txt_search = document.getElementById('txt_search') as HTMLInputElement;
+        ddlUserMaster = document.getElementById('ddlUserMaster') as HTMLSelectElement;
+
         //-------------------------------------------------------Customr-----------------------
 
         Insert_But_Cust = document.getElementById("Insert_But_Cust");
@@ -294,6 +299,27 @@ namespace SlsTrSales {
 
 
     }
+
+    function FillddlUserMaster() {
+        debugger
+        Ajax.Callsync({
+            type: "Get",
+            url: sys.apiUrl("G_USERS", "GetAllUser"),
+            data: {},
+            success: (d) => {
+                let result = d as BaseResponse;
+                if (result.IsSuccess) {
+                    UserDetails = result.Response as Array<G_USERS>;
+                    debugger
+
+                    DocumentActions.FillCombowithdefult(UserDetails, ddlUserMaster, "USER_CODE", "USER_CODE", "اختار المندوب");
+
+
+                }
+            }
+        });
+    }
+
     //--------------------------------------------------Display_familly_Cate--------------------------------
     function Display_familly_Cate() {
         Ajax.Callsync({
@@ -1212,7 +1238,7 @@ namespace SlsTrSales {
         List_MinUnitPrice = new Array<Stok_ORDER_DELIVERY>();
 
 
-        InvoiceModel.UserName = SysSession.CurrentEnvironment.UserCode;
+        InvoiceModel.UserName = ddlUserMaster.value == 'null' ? SysSession.CurrentEnvironment.UserCode : ddlUserMaster.value;
         InvoiceModel.Namber_Order_Delivery = 1;
         InvoiceModel.Total_All = Number($('#All_Total_Basket').attr('All_Total'));
         InvoiceModel.Date_Order_Delivery = timer();
@@ -1279,6 +1305,7 @@ namespace SlsTrSales {
     }
     function Finsh_Order_onclick() {
 
+        
 
 
         if (P != 0) {

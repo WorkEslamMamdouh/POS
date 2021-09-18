@@ -1,4 +1,4 @@
-﻿$(document).ready(() => {
+﻿+$(document).ready(() => {
 
     USERS.InitalizeComponent();
 })
@@ -24,8 +24,8 @@ namespace USERS {
     var OperationSingleModel: G_RoleUsers = new G_RoleUsers();
     var OperationModel_dital: Array<G_RoleUsers> = new Array<G_RoleUsers>();
     var CustomG_USERS_Model: CustomG_USERS = new CustomG_USERS();
-     
-     
+
+
 
     var ReportGrid: JsGrid = new JsGrid();
     var CashDetailsAr: Array<string> = new Array<string>();
@@ -44,8 +44,9 @@ namespace USERS {
     var btnsave: HTMLButtonElement;
     var btnAddDetails: HTMLButtonElement;
     var btnGive_assignments: HTMLButtonElement;
-    var btnBlock_permissions: HTMLButtonElement; 
+    var btnBlock_permissions: HTMLButtonElement;
     var btnLoadRoles: HTMLButtonElement;
+    var btnprint: HTMLButtonElement;
 
     var searchbutmemreport: HTMLInputElement;
     var txtUSER_CODE: HTMLInputElement;
@@ -72,14 +73,17 @@ namespace USERS {
     var txt_ID_APP_Category: HTMLSelectElement;
 
     var StatusFlag;
+    var End_Data = "";
+    var Start_Data = "";
 
     export function InitalizeComponent() {
 
+        debugger
         if (SysSession.CurrentEnvironment.ScreenLanguage = "ar") {
-            document.getElementById('Screen_name').innerHTML = "الاعدادات";
+            document.getElementById('Screen_name').innerHTML = "الموظفين";
 
         } else {
-            document.getElementById('Screen_name').innerHTML = "sitinge";
+            document.getElementById('Screen_name').innerHTML = "Employee";
 
         }
 
@@ -102,6 +106,7 @@ namespace USERS {
         btnDelet = document.getElementById("btnDelet") as HTMLButtonElement;
         btnsave = document.getElementById("btnsave") as HTMLButtonElement;
         btnback = document.getElementById("btnback") as HTMLButtonElement;
+        btnprint = document.getElementById("btnprint") as HTMLButtonElement;
         btnAddDetails = document.getElementById("btnAddDetails") as HTMLButtonElement;
 
         ddlUserMaster = document.getElementById("ddlUserMaster") as HTMLSelectElement;
@@ -113,11 +118,12 @@ namespace USERS {
         chk_IsActive = document.getElementById("chk_IsActive") as HTMLInputElement;
 
         btnGive_assignments = document.getElementById("btnGive_assignments") as HTMLButtonElement;
-        btnBlock_permissions = document.getElementById("btnBlock_permissions") as HTMLButtonElement; 
+        btnBlock_permissions = document.getElementById("btnBlock_permissions") as HTMLButtonElement;
         btnLoadRoles = document.getElementById("btnLoadRoles") as HTMLButtonElement;
 
-    } 
+    }
     function InitalizeEvents() {
+        debugger
         btnShow.onclick = btnShow_onclick;
         btnAdd.onclick = btnAdd_onclick;
         btnsave.onclick = btnsave_onClick;
@@ -125,7 +131,6 @@ namespace USERS {
         btnEdit.onclick = btnEdit_onclick;
         btnDelet.onclick = btnDelet_onclick;
         searchbutmemreport.onkeyup = _SearchBox_Change;
-        txtUSER_CODE.onchange = chack_USER;
 
         btnAddDetails.onclick = AddNewRow;
 
@@ -133,9 +138,13 @@ namespace USERS {
         btnBlock_permissions.onclick = Block_permissions_onClick;
         btnLoadRoles.onclick = btnLoadRoles_onClick;
 
+        txtUSER_CODE.onchange = chack_USER;
+
+        btnprint.onclick = () => { printreport(1) };
+
         //drpRoles.onchange = drpRoles_change;
 
-    } 
+    }
     function FillddlUserMaster() {
         debugger
         Ajax.Callsync({
@@ -147,7 +156,7 @@ namespace USERS {
                 if (result.IsSuccess) {
                     Details = result.Response as Array<G_USERS>;
                     debugger
- 
+
                     DocumentActions.FillCombowithdefult(Details, ddlUserMaster, "USER_CODE", "USER_CODE", "اختار المستخدم");
 
 
@@ -182,6 +191,8 @@ namespace USERS {
         for (var i = 0; i < Display.length; i++) {
 
             Display[i].USER_ACTIVE_Name = Display[i].USER_ACTIVE == false ? 'غير فعال' : 'فعال';
+            Display[i].JobTitle = Display[i].USER_TYPE == 1 ? 'مندوب' : 'مستخدم';
+
         }
 
         InitializeGrid();
@@ -196,7 +207,7 @@ namespace USERS {
 
         if (searchbutmemreport.value != "") {
             let search: string = searchbutmemreport.value.toLowerCase();
-            SearchDetails = Display.filter(x => x.USER_NAME.toLowerCase().search(search) >= 0);
+            SearchDetails = Display.filter(x => x.USER_NAME.toLowerCase().search(search) >= 0 || x.DepartmentName.toString().search(search) >= 0 || x.Mobile.toString().search(search) >= 0);
 
 
             ReportGrid.DataSource = SearchDetails;
@@ -208,9 +219,9 @@ namespace USERS {
     }
     function btnDelet_onclick() {
 
-        WorningMessage(" هل تريد الحذف؟ (" + $('#txtUSER_NAME').val()+")", "Do you want to delete?", "تحذير", "worning", () => {
+        WorningMessage(" هل تريد الحذف؟ (" + $('#txtUSER_NAME').val() + ")", "Do you want to delete?", "تحذير", "worning", () => {
 
-          
+
 
             Delete();
 
@@ -228,6 +239,8 @@ namespace USERS {
         $("#div_ContentData :input").removeAttr("disabled");
         $("#btnedite").toggleClass("display_none");
         $("#txt_ID_Supplier").attr("disabled", "disabled");
+        $("#txtID_Code").removeAttr("disabled");
+        $('#btnprint').addClass("display_none");
 
 
         $("#id_div_Add").attr("disabled", "disabled").off('click');
@@ -246,13 +259,19 @@ namespace USERS {
 
 
 
+
     }
     function btnAdd_onclick() {
         debugger
+
+
         IsNew = true;
         EnableControls();
         removedisabled();
-
+        $("#txtID_Code").removeAttr("disabled");
+        $("#txtUSER_Code").removeAttr("disabled");
+        $("#txtUSER_CODE").val("");
+        $("#txtID_Code").val("");
 
         $("#id_div_Add").attr("disabled", "disabled").off('click');
         var x1 = $("#id_div_Add").hasClass("disabledDiv");
@@ -263,6 +282,9 @@ namespace USERS {
         CountGrid = 0;
         //reference_Page();
         Valid = 0;
+
+        $('#btnprint').addClass("display_none");
+
     }
     function btnsave_onClick() {
         debugger
@@ -318,54 +340,72 @@ namespace USERS {
     }
     function Validation() {
 
-
-
-
+        if ($('#txtID_Code').val() == "") {
+            DisplayMassage(" يجب ادخال كود الموظف", "خطأ", MessageType.Error);
+            Errorinput($('#txtID_Code'));
+            return Valid = 1;
+        }
         if ($('#txtUSER_NAME').val() == "") {
-
-            MessageBox.Show("يجب ادخال اسم الموظف ", "Contact Email Is Not Valid");
+            DisplayMassage(" يجب ادخال اسم الموظف", "خطأ", MessageType.Error);
             Errorinput($('#txtUSER_NAME'));
             return Valid = 1;
         }
-        if ($('#txtDepartmentName').val() == "") {
-
-            MessageBox.Show("يجب ادخال القسم ", "Contact Email Is Not Valid");
-            Errorinput($('#txtDepartmentName'));
-
-            return Valid = 1;
-        }
-        if ($('#txtJobTitle').val() == "") {
-
-            MessageBox.Show("يجب ادخال  الوظيفة ", "Contact Email Is Not Valid");
+      
+        if ($('#txtJobTitle').val() == "Null") {
+            DisplayMassage(" يجب ادخال الوظيفة", "خطأ", MessageType.Error);
             Errorinput($('#txtJobTitle'));
 
             return Valid = 1;
         }
         if ($('#txtMobile').val() == "") {
-
-            MessageBox.Show("يجب ادخال الموبيل ", "Contact Email Is Not Valid");
+            DisplayMassage(" يجب ادخال الموبيل", "خطأ", MessageType.Error);
             Errorinput($('#txtMobile'));
 
             return Valid = 1;
         }
 
         if ($('#txtUSER_CODE').val() == "") {
-
-            MessageBox.Show("يجب ادخال  إسم المستخدم   ", "Contact Email Is Not Valid");
+            DisplayMassage(" يجب ادخال إسم المستخدم", "خطأ", MessageType.Error);
             Errorinput($('#txtUSER_CODE'));
 
             return Valid = 1;
         } if ($('#txtUSER_PASSWORD').val() == "") {
-
-            MessageBox.Show("يجب ادخال كلمة السر   ", "Contact Email Is Not Valid");
+            DisplayMassage(" يجب ادخال كلمة السر", "خطأ", MessageType.Error);
             Errorinput($('#txtUSER_PASSWORD'));
 
             return Valid = 1;
         }
-        if ($('#txtUSER_PASSWORD_confirm').val() != $('#txtUSER_PASSWORD').val() ) {
-
-            MessageBox.Show("كلمتى السر غير متوافقين", "Contact Email Is Not Valid");
+        if ($('#txtUSER_PASSWORD_confirm').val() != $('#txtUSER_PASSWORD').val()) {
+            DisplayMassage(" كلمتى السر غير متوافقين", "خطأ", MessageType.Error);
             Errorinput($('#txtUSER_PASSWORD_confirm'));
+
+            return Valid = 1;
+        }
+        var salary = Number($('#txtsalary').val());
+        if (salary == 0 || $('#txtsalary').val() == "") {
+            DisplayMassage(" يجب ادخال المرتب", "خطأ", MessageType.Error);
+            Errorinput($('#txtsalary'));
+
+            return Valid = 1;
+        }
+        var day = Number($('#txtday_num').val());
+        if (day == 0 || $('#txtday_num').val() == "") {
+            DisplayMassage(" يجب ادخال عدد ايام العمل", "خطأ", MessageType.Error);
+            Errorinput($('#txtday_num'));
+
+            return Valid = 1;
+        }
+        var hour = Number($('#txtDay_Off').val());
+        if (hour == 0 || $('#txtDay_Off').val() == "") {
+            DisplayMassage(" يجب ادخال عدد أيام الاجازه", "خطأ", MessageType.Error);
+            Errorinput($('#txtDay_Off'));
+
+            return Valid = 1;
+        }
+        var hour = Number($('#txthour_num').val());
+        if (hour == 0 || $('#txthour_num').val() == "") {
+            DisplayMassage(" يجب ادخال عدد ساعات العمل", "خطأ", MessageType.Error);
+            Errorinput($('#txthour_num'));
 
             return Valid = 1;
         }
@@ -396,15 +436,38 @@ namespace USERS {
             $(".fa-minus-circle").addClass("display_none");
             $("#btnedite").removeClass("display_none");
             $("#btnedite").removeAttr("disabled");
+
             txt_disabled();
 
             if (Valid != 2) {
                 $("#Div_control").attr("style", " margin-bottom: 19px;margin-top: 20px;display: none;");
-            
+
             }
             $("#id_div_Add").attr("disabled", "");
             $("#id_div_Add").removeClass("disabledDiv");
             disabled_Grid_Controls();
+
+            $('#btnprint').removeClass("display_none");
+
+            Selecteditem = Details.filter(s => s.USER_CODE == txtUSER_CODE.value);
+
+
+            DocumentActions.RenderFromModel(Selecteditem[0]);
+            $('#btnedite').removeClass("display_none");
+            $('#btnsave').addClass("display_none");
+            $('#btnback').addClass("display_none");
+            $('#btnedite').removeAttr("disabled");
+            if (Selecteditem[0].USER_ACTIVE == true)
+            { chk_IsActive.checked = true; }
+            else { chk_IsActive.checked = false; }
+
+            BindGetOperationItemsGridData(Selecteditem[0].USER_CODE)
+
+            $("#Div_control").attr("style", " margin-bottom: 19px;margin-top: 20px;");
+
+            End_Data = Selecteditem[0].End_Data;
+            Start_Data = Selecteditem[0].Start_Data;
+
         }
         else {
 
@@ -423,6 +486,8 @@ namespace USERS {
             $("#id_div_Add").removeClass("disabledDiv");
             DriverDoubleClick();
             disabled_Grid_Controls();
+            $('#btnprint').removeClass("display_none");
+
         }
         $('#btnDelet').addClass("display_none");
 
@@ -438,10 +503,9 @@ namespace USERS {
 
         chk_IsActive.checked = false;
 
-        $("#txtUSER_NAME").val("");
-        $("#txtDepartmentName").val("");
+        $("#txtUSER_NAME").val("");        
 
-        $("#txtJobTitle").val("");
+        $("#txtJobTitle").val("Null");
         $("#txtMobile").val("");
         $("#txtAddress").val("");
         $("#txtUSER_CODE").val("");
@@ -450,11 +514,16 @@ namespace USERS {
         $("#txtFirstLogin").val("");
         $("#txtLastLogin").val("");
 
+        $("#txtday_num").val("");
+        $("#txtDay_Off").val("");
+        $("#txthour_num").val("");
+        $("#txtUSER_Attendance").val("");
+        $("#txtsalary").val("");
+
     }
     function txt_disabled() {
 
-        $("#txtUSER_NAME").attr("disabled", "disabled");
-        $("#txtDepartmentName").attr("disabled", "disabled");
+        $("#txtUSER_NAME").attr("disabled", "disabled");        
         $("#chk_IsActive").attr("disabled", "disabled");
         $("#txtJobTitle").attr("disabled", "disabled");
         $("#txtMobile").attr("disabled", "disabled");
@@ -465,18 +534,27 @@ namespace USERS {
         $("#btnGive_assignments").attr("disabled", "disabled");
         $("#btnBlock_permissions").attr("disabled", "disabled");
         $("#btnLoadRoles").attr("disabled", "disabled");
+        $("#txtID_Code").attr("disabled", "disabled");
+        $("#txtsalary").attr("disabled", "disabled");
+        $("#txtday_num").attr("disabled", "disabled");
+        $("#txthour_num").attr("disabled", "disabled");
+        $("#txtDay_Off").attr("disabled", "disabled");
+
 
     }
     function removedisabled() {
         //debugger;
 
-        $("#txtUSER_NAME").removeAttr("disabled");
-        $("#txtDepartmentName").removeAttr("disabled");
+        $("#txtUSER_NAME").removeAttr("disabled");        
         $("#chk_IsActive").removeAttr("disabled");
         $("#txtJobTitle").removeAttr("disabled");
         $("#txtMobile").removeAttr("disabled");
         $("#txtAddress").removeAttr("disabled");
         $("#txtUSER_CODE").removeAttr("disabled");
+        $("#txtsalary").removeAttr("disabled");
+        $("#txtday_num").removeAttr("disabled");
+        $("#txthour_num").removeAttr("disabled");
+        $("#txtDay_Off").removeAttr("disabled");
         $("#txtUSER_PASSWORD").removeAttr("disabled");
         $("#txtUSER_PASSWORD_confirm").removeAttr("disabled");
         $("#btnGive_assignments").removeAttr("disabled");
@@ -485,13 +563,13 @@ namespace USERS {
 
 
 
-    } 
+    }
     function remove_disabled_Grid_Controls() {
 
         //$(".fontitm3").removeClass("display_none");
 
 
-        for (var i = 0; i < CountGrid+1 ; i++) {
+        for (var i = 0; i < CountGrid + 1; i++) {
             //$("#txtDescA" + i).removeAttr("disabled");
             $("#CheckISActive" + i).removeAttr("disabled");
             $("#txt_StatusFlag" + i).val("");
@@ -502,7 +580,7 @@ namespace USERS {
 
         //$(".fontitm3").addClass("display_none");
 
-        for (var i = 0; i < CountGrid +1 ; i++) {
+        for (var i = 0; i < CountGrid + 1; i++) {
 
             $("#txtDescA" + i).attr("disabled", "disabled");
             $("#CheckISActive" + i).attr("disabled", "disabled");
@@ -524,9 +602,9 @@ namespace USERS {
 
                     var DetLst = List_RoleDetails.filter(x => x.DescA == 'admin');
 
-                     var index = List_RoleDetails.indexOf(DetLst[0]);
-                     Delete_Rows(index, List_RoleDetails );
-                  
+                    var index = List_RoleDetails.indexOf(DetLst[0]);
+                    Delete_Rows(index, List_RoleDetails);
+
 
                 }
             }
@@ -548,10 +626,10 @@ namespace USERS {
     };
 
     function Delete_Rows(ind: number, array: any) {
-         
+
         delete array[ind];
 
-        reindexArray(array); 
+        reindexArray(array);
     }
 
     function InitializeGrid() {
@@ -572,9 +650,10 @@ namespace USERS {
         ReportGrid.OnItemEditing = () => { };
         ReportGrid.Columns = [
             { title: "الرقم", name: "USER_CODE", type: "text", width: "100px", visible: false },
+            { title: "كود الموظف", name: "DepartmentName", type: "text", width: "100px" },
             { title: "اسم الموظف", name: "USER_NAME", type: "text", width: "100px" },
             { title: "رقم الجوال", name: "Mobile", type: "text", width: "100px" },
-            { title: "النوع", name: "JobTitle", type: "text", width: "100px" },
+            { title: "الوظيفة", name: "JobTitle", type: "text", width: "100px" },
             { title: "مفعل", name: "USER_ACTIVE_Name", type: "textdd", width: "100px" },
 
 
@@ -583,8 +662,8 @@ namespace USERS {
     }
     function DriverDoubleClick() {
 
-        ////debugger
         Selecteditem = Details.filter(s => s.USER_CODE == ReportGrid.SelectedKey);
+
 
         DocumentActions.RenderFromModel(Selecteditem[0]);
         $('#btnedite').removeClass("display_none");
@@ -596,7 +675,12 @@ namespace USERS {
         else { chk_IsActive.checked = false; }
 
         BindGetOperationItemsGridData(Selecteditem[0].USER_CODE)
+
         $("#Div_control").attr("style", " margin-bottom: 19px;margin-top: 20px;");
+
+        End_Data = Selecteditem[0].End_Data;
+        Start_Data = Selecteditem[0].Start_Data;
+
     }
     function BindGetOperationItemsGridData(USER_CODE: string) {
         debugger
@@ -617,7 +701,7 @@ namespace USERS {
                         CountGrid = i;
                     }
 
-                    $("#txtItemCount").val(CountGrid );
+                    $("#txtItemCount").val(CountGrid);
 
 
 
@@ -633,7 +717,7 @@ namespace USERS {
         var html;
         html = '<div id="No_Row' + cnt + '" class="col-lg-12" >' +
             '<div class="col-lg-3" style="width: 9%;"><span id="btn_minus' + cnt + '" class="glyphicon glyphicon-remove-sign fontitm3  minus_btn display_none" style="font-size: 23px;"></span></div>' +
-           
+
             '<div class="col-lg-8 style_pading"><select id="txtDescA' + cnt + '" disabled class="form-control"><option value="Null">اختر المهمه</option></select></div>' +
             //'<div class="col-lg-7 style_pading"> <input id="txtRemarks' + cnt + '" type= "text" class="form-control " disabled="disabled"/></div>' +
             '<div class="col-lg-2 style_pading"> <input id="CheckISActive' + cnt + '"  type= "checkbox"  class="form-control " disabled="disabled" /></div>' +
@@ -675,7 +759,7 @@ namespace USERS {
         $("#btnAddDetails").addClass("display_none");
         $("#btn_minus" + cnt).addClass("display_none");
         $("#txt_StatusFlag" + cnt).val("");
-        $("#txtRoleId" + cnt).val(AllGetStokItemInfo[cnt].RoleId); 
+        $("#txtRoleId" + cnt).val(AllGetStokItemInfo[cnt].RoleId);
         $("#txtDescA" + cnt).prop("value", AllGetStokItemInfo[cnt].RoleId);
         $('#CheckISActive' + cnt).prop('checked', 'checked');
 
@@ -705,7 +789,7 @@ namespace USERS {
             $("#txt_StatusFlag" + CountGrid).val("i"); //In Insert mode         
             $("#txtDescA" + CountGrid).removeAttr("disabled");
             $("#CheckISActive" + CountGrid).removeAttr("disabled");
-           
+
 
 
             $("#btn_minus" + CountGrid).removeClass("display_none");
@@ -736,10 +820,10 @@ namespace USERS {
         });
     }
 
-  
+
 
     function Give_assignments_onClick() {
-        for (var i = 0; i < CountGrid +1 ; i++) {
+        for (var i = 0; i < CountGrid + 1; i++) {
             if ($("#txt_StatusFlag" + i).val() != 'i') {
                 $("#txt_StatusFlag" + i).val('u');
             }
@@ -747,7 +831,7 @@ namespace USERS {
         }
     }
     function Block_permissions_onClick() {
-        for (var i = 0; i < CountGrid+1 ; i++) {
+        for (var i = 0; i < CountGrid + 1; i++) {
             if ($("#txt_StatusFlag" + i).val() != 'i') {
                 $("#txt_StatusFlag" + i).val('u');
             }
@@ -757,17 +841,16 @@ namespace USERS {
     function btnLoadRoles_onClick() {
         //$('#div_Data').html("");
 
-        btnLoadRoles.disabled = true;
 
         debugger
         var Q = 0;
 
-        var le = Number(List_RoleDetails.length + List_Roles.length) ;
+        var le = Number(List_RoleDetails.length + List_Roles.length);
 
-        for (var i = List_Roles.length; i < le ; i++) {
+        for (var i = List_Roles.length; i < le; i++) {
 
             if ($("#txtUSER_NAME").val() == "" || txtUSER_CODE.value == "" || $("#txtUSER_PASSWORD").val() == "") {
-                WorningMessageDailog("من فضلك تاكد من ادخال جميع البيانات", "")
+                MessageBox.Show("من فضلك تاكد من ادخال جميع البيانات", "")
             }
             else {
                 let xx = List_Roles.filter(x => x.RoleId == List_RoleDetails[Q].RoleId);
@@ -790,12 +873,12 @@ namespace USERS {
                 //$("#Ch_RoleActive").addClass("display_none");
                 List_Singl_Roles.RoleId = List_RoleDetails[Q].RoleId;
                 List_Singl_Roles.USER_CODE = txtUSER_CODE.value;
-                    List_Roles.push(List_Singl_Roles);
+                List_Roles.push(List_Singl_Roles);
                 Q += 1;
+                btnLoadRoles.disabled = true;       
             }
         }
         CountGrid = Number(List_RoleDetails.length + List_Roles.length);
-
     }
 
 
@@ -863,6 +946,8 @@ namespace USERS {
             else { Model.USER_ACTIVE = false; }
             Model.CompCode = 1;
             Model.Tokenid = 'HGFD-EV+xyuNsKkkH9SJrgL6XgROioRT8GfXE48AZcSVHN+256IG5apvYig==';
+            Model.End_Data = "";
+            Model.Start_Data = "";
         }
         else {
 
@@ -872,21 +957,24 @@ namespace USERS {
             Model.USER_CODE = Selecteditem[0].USER_CODE;
             Model.CompCode = 1;
             Model.Tokenid = 'HGFD-EV+xyuNsKkkH9SJrgL6XgROioRT8GfXE48AZcSVHN+256IG5apvYig==';
+            Model.End_Data = End_Data;
+            Model.Start_Data = Start_Data;
+
         }
 
-        CustomG_USERS_Model.G_USERS = Model; 
+        CustomG_USERS_Model.G_USERS = Model;
 
     }
 
     function Assign_Grid() {
         debugger
         OperationModel_dital = new Array<G_RoleUsers>();
-        for (var i = 0; i <= CountGrid +1 ; i++) {
+        for (var i = 0; i <= CountGrid + 1; i++) {
             OperationSingleModel = new G_RoleUsers();
             StatusFlag = $("#txt_StatusFlag" + i).val();
 
             //if (StatusFlag == "i") {
-          
+
             //}
             //if (StatusFlag == "u") {
             //    OperationSingleModel.StatusFlag = StatusFlag.toString();
@@ -913,14 +1001,14 @@ namespace USERS {
                 OperationModel_dital.push(OperationSingleModel);
 
             }
-          
+
 
 
         }
         debugger
         OperationModel_dital = OperationModel_dital.filter(x => x.ISActive == true);
 
-        CustomG_USERS_Model.G_RoleUsers = OperationModel_dital; 
+        CustomG_USERS_Model.G_RoleUsers = OperationModel_dital;
     }
 
     function Insert() {
@@ -982,7 +1070,7 @@ namespace USERS {
 
     function Delete() {
 
-        var  USERS = $('#txtUSER_CODE').val();
+        var USERS = $('#txtUSER_CODE').val();
         debugger
 
         Ajax.Callsync({
@@ -997,16 +1085,65 @@ namespace USERS {
                     Update_claenData = 1;
                     FillddlUserMaster();
                     Display_All();
+                    btnback_onclick();
                     $("#Div_control").attr("style", " margin-bottom: 19px;margin-top: 20px;display: none;");
                     $("#id_div_Add").attr("disabled", "");
                     $("#id_div_Add").removeClass("disabledDiv");
                     Valid = 2;
+
+                    $('#btnDelet').addClass("display_none");
+
                 }
             }
         });
 
 
-       
+
 
     }
+
+
+    function printreport(type: number) {
+        let _StockList: Array<Settings_Report> = new Array<Settings_Report>();
+        let _Stock: Settings_Report = new Settings_Report();
+        _Stock.Type_Print = type;
+        _Stock.ID_Button_Print = 'emp_detail';
+        _Stock.Parameter_1 = $('#txtID_Code').val();
+        //_Stock.Parameter_2 = $('#txtToDate').val();
+        //_Stock.Parameter_3 = "";
+        //_Stock.Parameter_4 = "";
+        //_Stock.Parameter_5 = "";
+        //_Stock.Parameter_6 = "";
+        //_Stock.Parameter_7 = "";
+        //_Stock.Parameter_8 = "";
+        //_Stock.Parameter_9 = "";
+
+
+        _StockList.push(_Stock);
+
+        let rp: ReportParameters = new ReportParameters();
+
+        rp.Data_Report = JSON.stringify(_StockList);//output report as View
+
+        Ajax.Callsync({
+            url: Url.Action("Data_Report_Open", "GeneralReports"),
+            data: rp,
+            success: (d) => {
+                let result = d.result as string;
+
+
+                window.open(result, "_blank");
+            }
+        })
+
+
+
+
+
+
+
+
+    }
+
+
 }

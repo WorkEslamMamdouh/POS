@@ -20,7 +20,6 @@
         <EntityTypeShape EntityType="SamahModel.G_SearchFormSetting" Width="1.5" PointX="10.75" PointY="0.75" />
         <EntityTypeShape EntityType="SamahModel.G_SUB_SYSTEMS" Width="1.5" PointX="0.75" PointY="10.75" />
         <EntityTypeShape EntityType="SamahModel.G_SYSTEM" Width="1.5" PointX="10.75" PointY="5.75" />
-        <EntityTypeShape EntityType="SamahModel.G_USERS" Width="1.5" PointX="10.75" PointY="9.75" />
         <EntityTypeShape EntityType="SamahModel.ITEME" Width="1.5" PointX="12.75" PointY="0.75" />
         <EntityTypeShape EntityType="SamahModel.LoginPage" Width="1.5" PointX="2.75" PointY="12.75" />
         <EntityTypeShape EntityType="SamahModel.Message_Chat" Width="1.5" PointX="12.75" PointY="4.75" />
@@ -50,6 +49,7 @@
         <EntityTypeShape EntityType="SamahModel.ReviewSalesItemInfo" Width="1.5" PointX="18.75" PointY="14.75" />
         <EntityTypeShape EntityType="SamahModel.PRODUCT" Width="1.5" PointX="11.375" PointY="19.75" />
         <EntityTypeShape EntityType="SamahModel.ReviewSalesMaster" Width="1.5" PointX="13.375" PointY="19.75" />
+        <EntityTypeShape EntityType="SamahModel.G_USERS" Width="1.5" PointX="15.375" PointY="19.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

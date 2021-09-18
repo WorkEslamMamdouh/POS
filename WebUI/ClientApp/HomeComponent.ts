@@ -784,6 +784,7 @@ namespace HomeComponent {
 
 
     }
+  
     function Check_Close_Day() {
 
 
@@ -797,13 +798,19 @@ namespace HomeComponent {
                     let res = result.Response
 
                     //alert(res);
+
                     if (res == '1900-01-01T00:00:00') {
+
+                        
+                        $('#Data_Day').html("");
 
                         //Close.style.
                         $('#Close').attr('style', 'margin-top: -18%;background-color: #4df109;border-radius: 11px;');
 
                     }
                     else {
+                        $('#Data_Day').html(formatDate(res));
+
                         $('#Close').attr('style', 'margin-top: -18%;background-color: #c40303;border-radius: 11px;');
 
                     }

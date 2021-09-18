@@ -1262,6 +1262,16 @@ class G_USERS extends SecurityClass {
         this.UpdatedBy = "";
         this.CashBoxID = 0;
         this.SalesManID = 0;
+        this.salary = 0;
+        this.day_num = 0;
+        this.hour_num = 0;
+        this.Num_Attendance = 0;
+        this.ID_Code = 0;
+        this.End_Data = "";
+        this.Start_Data = "";
+        this.Day_Off = 0;
+
+
     }
     public USER_CODE: string;
     public USER_PASSWORD: string;
@@ -1294,6 +1304,16 @@ class G_USERS extends SecurityClass {
     public UpdatedBy: string;
     public CashBoxID: number;
     public SalesManID: number;
+    public salary: number;
+    public day_num: number;
+    public hour_num: number;
+    public Num_Attendance: number;
+    public ID_Code: number;
+    public End_Data: string;
+    public Start_Data: string;
+    public Day_Off: number;
+
+
 }
 
 

@@ -273,6 +273,13 @@
           <Property Name="UpdatedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="CashBoxID" Type="int" />
           <Property Name="SalesManID" Type="int" />
+          <Property Name="salary" Type="money" />
+          <Property Name="day_num" Type="int" />
+          <Property Name="hour_num" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Num_Attendance" Type="int" />
+          <Property Name="End_Data" Type="nvarchar" MaxLength="50" />
+          <Property Name="Start_Data" Type="nvarchar" MaxLength="50" />
+          <Property Name="Day_Off" Type="int" />
         </EntityType>
         <EntityType Name="ITEME">
           <Key>
@@ -525,6 +532,8 @@
           <Property Name="Task" Type="float" />
           <Property Name="Day_Date" Type="nvarchar" MaxLength="50" />
           <Property Name="Shift_User" Type="nvarchar" MaxLength="50" />
+          <Property Name="TrType" Type="int" />
+          <Property Name="PRODUCT_PRICE" Type="money" />
         </EntityType>
         <EntityType Name="Type_EMPLOYEE">
           <Key>
@@ -1182,11 +1191,6 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
             <Parameter Name="usar_name_emp" Mode="In" Type="String" />
             <Parameter Name="passwrd_emp" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="all_The_Gard" ReturnType="Collection(SamahModel.all_The_Gard_Result)">
-            <Parameter Name="UserName" Mode="In" Type="String" />
-            <Parameter Name="FromDate" Mode="In" Type="DateTime" />
-            <Parameter Name="ToDate" Mode="In" Type="DateTime" />
-          </FunctionImport>
           <FunctionImport Name="Date_Time_Now" ReturnType="Collection(DateTime)" />
           <FunctionImport Name="delet_PRODUCT">
           <Parameter Name="PRODUCT_NAME" Mode="In" Type="String" />
@@ -1478,7 +1482,6 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
           <EntitySet Name="G_SearchFormSetting" EntityType="SamahModel.G_SearchFormSetting" />
           <EntitySet Name="G_SUB_SYSTEMS" EntityType="SamahModel.G_SUB_SYSTEMS" />
           <EntitySet Name="G_SYSTEM" EntityType="SamahModel.G_SYSTEM" />
-          <EntitySet Name="G_USERS" EntityType="SamahModel.G_USERS" />
           <EntitySet Name="ITEMEs" EntityType="SamahModel.ITEME" />
           <EntitySet Name="LoginPages" EntityType="SamahModel.LoginPage" />
           <EntitySet Name="Message_Chat" EntityType="SamahModel.Message_Chat" />
@@ -1515,6 +1518,12 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
           <EntitySet Name="PRODUCTs" EntityType="SamahModel.PRODUCT" />
           <FunctionImport Name="New_Data_Bes" />
           <EntitySet Name="ReviewSalesMasters" EntityType="SamahModel.ReviewSalesMaster" />
+          <FunctionImport Name="all_The_Gard" ReturnType="Collection(SamahModel.all_The_Gard_Result)">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="FromDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ToDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <EntitySet Name="G_USERS" EntityType="SamahModel.G_USERS" />
           </EntityContainer>
         <ComplexType Name="insert_Table_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
@@ -1545,18 +1554,6 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
           <Property Type="String" Name="Message" Nullable="true" MaxLength="50" />
           <Property Type="Boolean" Name="cheak" Nullable="true" />
           <Property Type="String" Name="StatusFlag" Nullable="true" MaxLength="50" />
-        </ComplexType>
-        <ComplexType Name="all_The_Gard_Result">
-          <Property Type="String" Name="PRODUCT_NAME" Nullable="true" MaxLength="50" />
-          <Property Type="Decimal" Name="PRODUCT_Purchasing_price" Nullable="true" Precision="19" />
-          <Property Type="Decimal" Name="PRODUCT_PRICE" Nullable="true" Precision="19" />
-          <Property Type="Double" Name="PRODUCT_Qut" Nullable="true" />
-          <Property Type="Decimal" Name="Total_Price_One_Part" Nullable="true" Precision="19" />
-          <Property Type="Decimal" Name="Shortage" Nullable="true" Precision="19" />
-          <Property Type="Int32" Name="Outlet" Nullable="true" />
-          <Property Type="Double" Name="Task___" Nullable="true" />
-          <Property Type="Decimal" Name="The_total_amount" Nullable="true" Precision="19" />
-          <Property Type="Double" Name="Net_Money" Nullable="true" />
         </ComplexType>
         <ComplexType Name="get_emp_Result">
           <Property Type="String" Name="EMPLOYEE_NAME" Nullable="true" MaxLength="50" />
@@ -2009,41 +2006,6 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
           <Property Name="INIT_ORDER" Type="Int32" />
           <Property Name="VER_PATH" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="G_USERS">
-          <Key>
-            <PropertyRef Name="USER_CODE" />
-          </Key>
-          <Property Name="USER_CODE" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="USER_PASSWORD" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="USER_ACTIVE" Type="Boolean" Nullable="false" />
-          <Property Name="USER_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CompCode" Type="Int32" />
-          <Property Name="REGION_CODE" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="GRP_CODE" Type="Int32" />
-          <Property Name="USER_PASSWORD2" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="CHANGE_PASS_DATE" Type="DateTime" Precision="0" />
-          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Tel" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="Fax" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="Mobile" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="DepartmentName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="JobTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="USER_TYPE" Type="Byte" />
-          <Property Name="ManagedBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="LoginUrl" Type="Boolean" />
-          <Property Name="Tokenid" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="LastLogin" Type="DateTime" Precision="0" />
-          <Property Name="FirstLogin" Type="DateTime" Precision="0" />
-          <Property Name="Remarks" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedAt" Type="DateTime" Precision="0" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UpdatedAt" Type="DateTime" Precision="0" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CashBoxID" Type="Int32" />
-          <Property Name="SalesManID" Type="Int32" />
-        </EntityType>
         <EntityType Name="ITEME">
           <Key>
             <PropertyRef Name="ID_Iteme" />
@@ -2281,6 +2243,8 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
           <Property Name="Task" Type="Double" />
           <Property Name="Day_Date" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Shift_User" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TrType" Type="Int32" />
+          <Property Name="PRODUCT_PRICE" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
         <EntityType Name="Type_EMPLOYEE">
           <Key>
@@ -2452,6 +2416,67 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
           <Property Name="Name_Pilot" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Namber_Order_Delivery" Type="Int32" />
         </EntityType>
+        <ComplexType Name="all_The_Gard_Result">
+          <Property Type="Int64" Name="RowNum" Nullable="true" />
+          <Property Type="String" Name="PRODUCT_NAME" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="PRODUCT_Purchasing_price" Nullable="true" Precision="19" />
+          <Property Type="Decimal" Name="MinUnitPrice" Nullable="true" Precision="19" />
+          <Property Type="Double" Name="PRODUCT_Qut" Nullable="true" />
+          <Property Type="Decimal" Name="Total_Price_One_Part" Nullable="true" Precision="19" />
+          <Property Type="Decimal" Name="Shortage" Nullable="true" Precision="19" />
+          <Property Type="Int32" Name="Outlet" Nullable="true" />
+          <Property Type="Int32" Name="Enter_Money" Nullable="true" />
+          <Property Type="Double" Name="Task" Nullable="true" />
+          <Property Type="Int32" Name="TrType" Nullable="true" />
+          <Property Type="Decimal" Name="PRODUCT_PRICE" Nullable="true" Precision="19" />
+          <Property Type="Decimal" Name="The_total_amount" Nullable="true" Precision="19" />
+          <Property Type="Double" Name="Net_Money" Nullable="true" />
+          <Property Type="String" Name="Shift_User" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="FromDate" Nullable="true" />
+          <Property Type="DateTime" Name="ToDate" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="G_USERS">
+          <Key>
+            <PropertyRef Name="USER_CODE" />
+          </Key>
+          <Property Name="USER_CODE" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="USER_PASSWORD" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="USER_ACTIVE" Type="Boolean" Nullable="false" />
+          <Property Name="USER_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CompCode" Type="Int32" />
+          <Property Name="REGION_CODE" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="GRP_CODE" Type="Int32" />
+          <Property Name="USER_PASSWORD2" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CHANGE_PASS_DATE" Type="DateTime" Precision="0" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Tel" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Fax" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="JobTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="USER_TYPE" Type="Byte" />
+          <Property Name="ManagedBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="LoginUrl" Type="Boolean" />
+          <Property Name="Tokenid" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="LastLogin" Type="DateTime" Precision="0" />
+          <Property Name="FirstLogin" Type="DateTime" Precision="0" />
+          <Property Name="Remarks" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="0" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Precision="0" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CashBoxID" Type="Int32" />
+          <Property Name="SalesManID" Type="Int32" />
+          <Property Name="salary" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="day_num" Type="Int32" />
+          <Property Name="hour_num" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Num_Attendance" Type="Int32" />
+          <Property Name="End_Data" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Start_Data" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Day_Off" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2463,22 +2488,6 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
           <FunctionImportMapping FunctionImportName="Add_Message_open_Uesr" FunctionName="SamahModel.Store.Add_Message_open_Uesr" />
           <FunctionImportMapping FunctionImportName="Add_Settings" FunctionName="SamahModel.Store.Add_Settings" />
           <FunctionImportMapping FunctionImportName="addemp" FunctionName="SamahModel.Store.addemp" />
-          <FunctionImportMapping FunctionImportName="all_The_Gard" FunctionName="SamahModel.Store.all_The_Gard">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="SamahModel.all_The_Gard_Result">
-                <ScalarProperty Name="PRODUCT_NAME" ColumnName="PRODUCT_NAME" />
-                <ScalarProperty Name="PRODUCT_Purchasing_price" ColumnName="PRODUCT_Purchasing_price" />
-                <ScalarProperty Name="PRODUCT_PRICE" ColumnName="PRODUCT_PRICE" />
-                <ScalarProperty Name="PRODUCT_Qut" ColumnName="PRODUCT_Qut" />
-                <ScalarProperty Name="Total_Price_One_Part" ColumnName="Total_Price_One_Part" />
-                <ScalarProperty Name="Shortage" ColumnName="Shortage" />
-                <ScalarProperty Name="Outlet" ColumnName="Outlet" />
-                <ScalarProperty Name="Task___" ColumnName="Task(%)" />
-                <ScalarProperty Name="The_total_amount" ColumnName="The_total_amount" />
-                <ScalarProperty Name="Net_Money" ColumnName="Net_Money" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="Date_Time_Now" FunctionName="SamahModel.Store.Date_Time_Now" />
           <FunctionImportMapping FunctionImportName="delet_PRODUCT" FunctionName="SamahModel.Store.delet_PRODUCT" />
           <FunctionImportMapping FunctionImportName="Delete_Cat" FunctionName="SamahModel.Store.Delete_Cat" />
@@ -3068,42 +3077,6 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="G_USERS">
-            <EntityTypeMapping TypeName="SamahModel.G_USERS">
-              <MappingFragment StoreEntitySet="G_USERS">
-                <ScalarProperty Name="SalesManID" ColumnName="SalesManID" />
-                <ScalarProperty Name="CashBoxID" ColumnName="CashBoxID" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-                <ScalarProperty Name="FirstLogin" ColumnName="FirstLogin" />
-                <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
-                <ScalarProperty Name="Tokenid" ColumnName="Tokenid" />
-                <ScalarProperty Name="LoginUrl" ColumnName="LoginUrl" />
-                <ScalarProperty Name="ManagedBy" ColumnName="ManagedBy" />
-                <ScalarProperty Name="USER_TYPE" ColumnName="USER_TYPE" />
-                <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
-                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
-                <ScalarProperty Name="Fax" ColumnName="Fax" />
-                <ScalarProperty Name="Tel" ColumnName="Tel" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="CHANGE_PASS_DATE" ColumnName="CHANGE_PASS_DATE" />
-                <ScalarProperty Name="USER_PASSWORD2" ColumnName="USER_PASSWORD2" />
-                <ScalarProperty Name="GRP_CODE" ColumnName="GRP_CODE" />
-                <ScalarProperty Name="REGION_CODE" ColumnName="REGION_CODE" />
-                <ScalarProperty Name="CompCode" ColumnName="CompCode" />
-                <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
-                <ScalarProperty Name="USER_ACTIVE" ColumnName="USER_ACTIVE" />
-                <ScalarProperty Name="USER_PASSWORD" ColumnName="USER_PASSWORD" />
-                <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ITEMEs">
             <EntityTypeMapping TypeName="SamahModel.ITEME">
               <MappingFragment StoreEntitySet="ITEME">
@@ -3348,6 +3321,8 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
           <EntitySetMapping Name="The_Gard">
             <EntityTypeMapping TypeName="SamahModel.The_Gard">
               <MappingFragment StoreEntitySet="The_Gard">
+                <ScalarProperty Name="PRODUCT_PRICE" ColumnName="PRODUCT_PRICE" />
+                <ScalarProperty Name="TrType" ColumnName="TrType" />
                 <ScalarProperty Name="Shift_User" ColumnName="Shift_User" />
                 <ScalarProperty Name="Day_Date" ColumnName="Day_Date" />
                 <ScalarProperty Name="Task" ColumnName="Task" />
@@ -3545,6 +3520,72 @@ warning 6002: The table/view 'ElWassem.dbo.ReviewSalesMaster' does not have a pr
                 <ScalarProperty Name="CUSTOMER_NAME" ColumnName="CUSTOMER_NAME" />
                 <ScalarProperty Name="Date_Order_Delivery" ColumnName="Date_Order_Delivery" />
                 <ScalarProperty Name="ID_ORDER_Delivery" ColumnName="ID_ORDER_Delivery" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="all_The_Gard" FunctionName="SamahModel.Store.all_The_Gard">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SamahModel.all_The_Gard_Result">
+                <ScalarProperty Name="RowNum" ColumnName="RowNum" />
+                <ScalarProperty Name="PRODUCT_NAME" ColumnName="PRODUCT_NAME" />
+                <ScalarProperty Name="PRODUCT_Purchasing_price" ColumnName="PRODUCT_Purchasing_price" />
+                <ScalarProperty Name="MinUnitPrice" ColumnName="MinUnitPrice" />
+                <ScalarProperty Name="PRODUCT_Qut" ColumnName="PRODUCT_Qut" />
+                <ScalarProperty Name="Total_Price_One_Part" ColumnName="Total_Price_One_Part" />
+                <ScalarProperty Name="Shortage" ColumnName="Shortage" />
+                <ScalarProperty Name="Outlet" ColumnName="Outlet" />
+                <ScalarProperty Name="Enter_Money" ColumnName="Enter_Money" />
+                <ScalarProperty Name="Task" ColumnName="Task" />
+                <ScalarProperty Name="TrType" ColumnName="TrType" />
+                <ScalarProperty Name="PRODUCT_PRICE" ColumnName="PRODUCT_PRICE" />
+                <ScalarProperty Name="The_total_amount" ColumnName="The_total_amount" />
+                <ScalarProperty Name="Net_Money" ColumnName="Net_Money" />
+                <ScalarProperty Name="Shift_User" ColumnName="Shift_User" />
+                <ScalarProperty Name="FromDate" ColumnName="FromDate" />
+                <ScalarProperty Name="ToDate" ColumnName="ToDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="G_USERS">
+            <EntityTypeMapping TypeName="SamahModel.G_USERS">
+              <MappingFragment StoreEntitySet="G_USERS">
+                <ScalarProperty Name="Day_Off" ColumnName="Day_Off" />
+                <ScalarProperty Name="Start_Data" ColumnName="Start_Data" />
+                <ScalarProperty Name="End_Data" ColumnName="End_Data" />
+                <ScalarProperty Name="Num_Attendance" ColumnName="Num_Attendance" />
+                <ScalarProperty Name="hour_num" ColumnName="hour_num" />
+                <ScalarProperty Name="day_num" ColumnName="day_num" />
+                <ScalarProperty Name="salary" ColumnName="salary" />
+                <ScalarProperty Name="SalesManID" ColumnName="SalesManID" />
+                <ScalarProperty Name="CashBoxID" ColumnName="CashBoxID" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="FirstLogin" ColumnName="FirstLogin" />
+                <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
+                <ScalarProperty Name="Tokenid" ColumnName="Tokenid" />
+                <ScalarProperty Name="LoginUrl" ColumnName="LoginUrl" />
+                <ScalarProperty Name="ManagedBy" ColumnName="ManagedBy" />
+                <ScalarProperty Name="USER_TYPE" ColumnName="USER_TYPE" />
+                <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="CHANGE_PASS_DATE" ColumnName="CHANGE_PASS_DATE" />
+                <ScalarProperty Name="USER_PASSWORD2" ColumnName="USER_PASSWORD2" />
+                <ScalarProperty Name="GRP_CODE" ColumnName="GRP_CODE" />
+                <ScalarProperty Name="REGION_CODE" ColumnName="REGION_CODE" />
+                <ScalarProperty Name="CompCode" ColumnName="CompCode" />
+                <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
+                <ScalarProperty Name="USER_ACTIVE" ColumnName="USER_ACTIVE" />
+                <ScalarProperty Name="USER_PASSWORD" ColumnName="USER_PASSWORD" />
+                <ScalarProperty Name="USER_CODE" ColumnName="USER_CODE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

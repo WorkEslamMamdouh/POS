@@ -44,5 +44,12 @@ namespace DAL.Domain
         public string UpdatedBy { get; set; }
         public Nullable<int> CashBoxID { get; set; }
         public Nullable<int> SalesManID { get; set; }
+        public Nullable<decimal> salary { get; set; }
+        public Nullable<int> day_num { get; set; }
+        public Nullable<decimal> hour_num { get; set; }
+        public Nullable<int> Num_Attendance { get; set; }
+        public string End_Data { get; set; }
+        public string Start_Data { get; set; }
+        public Nullable<int> Day_Off { get; set; }
     }
 }

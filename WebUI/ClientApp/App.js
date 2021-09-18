@@ -28,6 +28,11 @@ var Modules = {
     Income_expenses: "Income_expenses",
     USERS: "USERS"
 };
+var MessageType = {
+    Error: '2',
+    Succeed: '1',
+    Worning: '3',
+};
 var Keys = {
     Enter: "Enter"
 };
@@ -1119,6 +1124,41 @@ function CreateDropdownListWithDefaultValue(arr, Name_Ar, Name_En, Key, DefaultV
 //    }
 //    return element;
 //}
+function formatDate(date) {
+    var d = new Date(date), month = '' + (d.getMonth() + 1), day = '' + d.getDate(), year = d.getFullYear();
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+    return [year, month, day].join('-');
+}
+function DisplayMassage(msg_Ar, msg_En, msg_type, OnOk) {
+    var Env = GetSystemEnvironment();
+    // msgtype : 1 : Sucess , 2: Fetal Error , 3: Data Entry Error 
+    if (Env.ScreenLanguage == "en")
+        $('#Text_Massage').html(msg_En);
+    else
+        $('#Text_Massage').html(msg_Ar);
+    if (msg_type == '1') {
+        $('#DivMassage').attr('class', 'col-lg-12 ');
+        $('#DivMassage').attr('style', ' border: solid 7px;border-radius: 45px; border-color: #5cb702;');
+        $('#Text_Massage').attr('style', 'text-align: center;font-weight: bold;color: #5cb702;margin-top: 14px;');
+        setTimeout(function () { $('#DivMassage').attr('style', ' border-style: solid;border: solid;border-color: #5cb702; display: none; '); }, 5000);
+    }
+    else if (msg_type == '2') {
+        $('#DivMassage').attr('class', 'col-lg-12');
+        $('#DivMassage').attr('style', 'border: solid 7px;border-radius: 45px;border-color: red;');
+        $('#Text_Massage').attr('style', 'text-align: center;font-weight: bold;color: #e41b1b;margin-top: 14px;');
+        setTimeout(function () { $('#DivMassage').attr('style', ' border-style: solid;border: solid;border-color: #5cb702; display: none; '); }, 5000);
+    }
+    else if (msg_type == '3') {
+        $('#DivMassage').attr('class', 'col-lg-12');
+        $('#DivMassage').attr('style', ' border: solid 7px;border-radius: 45px;border-color: #f0ad4e;');
+        $('#Text_Massage').attr('style', 'text-align: center;font-weight: bold;color: #f0ad4e;margin-top: 14px;');
+        ////debugger
+        setTimeout(function () { $('#DivMassage').attr('style', ' border-style: solid;border: solid;border-color: #e41b1b; display: none; '); }, 5000);
+    }
+}
 function OpenPopUp(moduleCode, PopupBody, PopupDialog) {
     var json = $.ajax({
         type: "GET",
